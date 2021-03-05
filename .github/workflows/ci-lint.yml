@@ -1,0 +1,30 @@
+#
+# CI Linter
+#
+# This workflow performs linter checks on the codebase. It is not specific
+# to a linter, but any kind of codebase checks are included.
+#
+
+name: "CI Linter"
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+jobs:
+  #
+  # Run pylint
+  #
+  pylint:
+    name: "Python Linter"
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/osbuild/rpmrepo-ci:latest
+    steps:
+    - name: "Clone Repository"
+      uses: actions/checkout@v2
+    - name: "Run pylint"
+      run: |
+        python3 -m pylint \
+          src/gateway/*.py
