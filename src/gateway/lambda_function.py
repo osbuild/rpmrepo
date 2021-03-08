@@ -80,10 +80,10 @@ def _parse_storage(storage):
     elif storage == "psi":
         return "https://rhos-d.infra.prod.upshift.rdu2.redhat.com:13808/v1/AUTH_95e858620fb34bcc9162d9f52367a560/rpmci/data/anon"
     elif storage == "public":
-        return "https://rpmrepo.storage.s3.amazonaws.com/data/public"
+        return "https://rpmrepo-storage.s3.amazonaws.com/data/public"
     elif storage == "rhvpn":
         # XXX: This must use our VPCE to work.
-        return "https://rpmrepo.storage.s3.amazonaws.com/data/rhvpn"
+        return "https://rpmrepo-storage.s3.amazonaws.com/data/rhvpn"
     else:
         return None
 
@@ -115,7 +115,7 @@ def _query_s3(storage, snapshot, path):
     else:
         try:
             head = s3c.head_object(
-                Bucket="rpmrepo.storage",
+                Bucket="rpmrepo-storage",
                 Key=f"data/ref/{snapshot}/{path}",
             )
         except botocore.exceptions.ClientError:
@@ -274,10 +274,10 @@ def test_parse_storage():
     assert r == "https://rhos-d.infra.prod.upshift.rdu2.redhat.com:13808/v1/AUTH_95e858620fb34bcc9162d9f52367a560/rpmci/data/anon"
 
     r = _parse_storage("public")
-    assert r == "https://rpmrepo.storage.s3.amazonaws.com/data/public"
+    assert r == "https://rpmrepo-storage.s3.amazonaws.com/data/public"
 
     r = _parse_storage("rhvpn")
-    assert r == "https://rpmrepo.storage.s3.amazonaws.com/data/rhvpn"
+    assert r == "https://rpmrepo-storage.s3.amazonaws.com/data/rhvpn"
 
 
 def test_query_s3():
@@ -332,4 +332,4 @@ def test_mirror():
         None,
     )
     assert r["statusCode"] == 301
-    assert r["headers"]["Location"] == "https://rpmrepo.storage.s3.amazonaws.com/data/public/unused/sha256-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    assert r["headers"]["Location"] == "https://rpmrepo-storage.s3.amazonaws.com/data/public/unused/sha256-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
