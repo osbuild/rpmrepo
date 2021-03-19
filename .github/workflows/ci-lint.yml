@@ -27,4 +27,6 @@ jobs:
     - name: "Run pylint"
       run: |
         python3 -m pylint \
+          --disable duplicate-code \
+          src/ctl \
           src/gateway/*.py
