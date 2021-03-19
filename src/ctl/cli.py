@@ -166,7 +166,7 @@ class Cli(contextlib.AbstractContextManager):
             default=[],
             help="Target to push to",
             metavar="DESC",
-            nargs=5,
+            nargs=3,
             type=str,
         )
 
