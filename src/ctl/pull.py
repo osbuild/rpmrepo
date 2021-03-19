@@ -49,7 +49,7 @@ class Pull(contextlib.AbstractContextManager):
 
             # Write a `dnf.conf` with just a single repository configuration
             # which we then use for the `dnf reposync` operation.
-            with util.open_tmpfile(self._path_conf) as ctx:
+            with open(os.path.join(self._path_conf, "dnf.conf"), "wb") as filp:
                 content = (
                     "[main]\n"
                     f"module_platform_id=platform:{self._platform_id}\n"
@@ -57,10 +57,8 @@ class Pull(contextlib.AbstractContextManager):
                     "name=repo0\n"
                     f"baseurl={self._baseurl}\n"
                 )
-                ctx["stream"].write(content.encode())
-                ctx["stream"].flush()
-                ctx["name"] = "dnf.conf"
-                ctx["replace"] = True
+                filp.write(content.encode())
+                filp.flush()
             self._path_dnfconf = os.path.join(self._path_conf, "dnf.conf")
 
             # Setup succeeded, make sure to retain the exitstack for __exit__.
