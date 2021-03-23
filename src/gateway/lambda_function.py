@@ -66,7 +66,8 @@ def _parse_proxy(stage, proxy):
     # allowed to encode further slashes or other special characters in each
     # element. The command handlers explicitly support that. However, we do
     # not allow empty elements, as all current commands require non-empty
-    # arguments (this also means you cannot have trailing slashes for now).
+    # arguments (this also means you cannot have trailing slashes for now,
+    # but API-Gateway drops those silently, anyway).
 
     elements = proxy.split("/")
     if len(elements) < 1:
@@ -229,7 +230,7 @@ def _run_enumerate(arguments):
     pages = paginator.paginate(Bucket="rpmrepo-storage", Prefix=prefix)
 
     for page in pages:
-        for entry in page["Contents"]:
+        for entry in page.get("Contents", []):
             # get everything past the last slash
             key = entry.get("Key").rsplit("/", 1)[1]
             if len(key) > 0:
@@ -580,6 +581,13 @@ def test_enumerate():
     )
     assert r["statusCode"] == 200
     assert r["body"] == json.dumps(["empty"])
+
+    r = lambda_handler(
+        { "pathParameters": { "proxy": "enumerate/invalid" } },
+        None,
+    )
+    assert r["statusCode"] == 200
+    assert r["body"] == json.dumps([])
 
 
 def test_mirror():
