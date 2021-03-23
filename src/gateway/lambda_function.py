@@ -84,7 +84,13 @@ def _parse_proxy(stage, proxy):
     # use. Note that there are gating-tests in old RHEL versions that might
     # use those APIs for quite some time.
 
-    if stage == "psi":
+    if stage == "control":
+        command = elements[0]
+        if command == "snapshots":
+            return { "enumerate": {} }
+        else:
+            return None
+    elif stage == "psi":
         # Old PSI storage which simply redirects based on metadata or package
         # selector. Uses the old `manifestdb` Swift-Storage on PSI OpenStack.
         # This is no longer updated, but still used.
@@ -107,8 +113,8 @@ def _parse_proxy(stage, proxy):
             },
         }
 
-    elif stage in ("control", "s3"):
-        # Both APIs are no longer in use, so we do not implement them.
+    elif stage == "s3":
+        # These APIs are no longer in use, so we do not implement them.
 
         return None
 
@@ -373,6 +379,20 @@ def test_parse_proxy():
     assert r is None
     r = _parse_proxy(None, "a/b/c/d")
     assert r is None
+
+    # Test `control` stage
+
+    r = _parse_proxy("control", "")
+    assert r is None
+    r = _parse_proxy("control", "/")
+    assert r is None
+    r = _parse_proxy("control", "foobar")
+    assert r is None
+
+    r = _parse_proxy("control", "snapshots")
+    assert r == {
+        "enumerate": {}
+    }
 
     # Test `psi` stage
 
