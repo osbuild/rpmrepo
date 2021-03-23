@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/releases/33/Everything/x86_64/os/",
+        "platform-id": "f33",
+        "snapshot-id": "f33-x86_64-fedora",
+        "storage": "public"
+}
