@@ -1,0 +1,7 @@
+{
+        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/releases/33/Everything/aarch64/os/",
+        "platform-id": "f33",
+        "singleton": "20210414",
+        "snapshot-id": "f33-aarch64-fedora",
+        "storage": "public"
+}
