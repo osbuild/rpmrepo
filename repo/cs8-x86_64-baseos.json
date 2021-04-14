@@ -1,0 +1,6 @@
+{
+        "base-url": "http://msync.centos.org/centos/8-stream/BaseOS/x86_64/os/",
+        "platform-id": "el8",
+        "snapshot-id": "cs8-x86_64-baseos",
+        "storage": "public"
+}
