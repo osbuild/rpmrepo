@@ -1,0 +1,7 @@
+{
+        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/releases/34/Modular/x86_64/os/",
+        "platform-id": "f34",
+        "singleton": "20210512",
+        "snapshot-id": "f34-x86_64-fedora-modular",
+        "storage": "public"
+}

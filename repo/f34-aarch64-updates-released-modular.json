@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/updates/34/Modular/aarch64/",
+        "platform-id": "f34",
+        "snapshot-id": "f34-aarch64-updates-released-modular",
+        "storage": "public"
+}
