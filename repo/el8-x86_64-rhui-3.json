@@ -1,0 +1,6 @@
+{
+        "base-url": "http://download.eng.bos.redhat.com/rel-eng/rhel-8/RHUI/latest-RHUI-Client-3-RHEL-8/compose/RHUI/x86_64/os/",
+        "platform-id": "el8",
+        "snapshot-id": "el8-x86_64-rhui-3",
+        "storage": "rhvpn"
+}
