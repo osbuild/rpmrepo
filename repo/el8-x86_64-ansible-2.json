@@ -1,0 +1,6 @@
+{
+        "base-url": "http://rhsm-pulp.corp.redhat.com/content/dist/layered/rhel8/x86_64/ansible/2/os/",
+        "platform-id": "el8",
+        "snapshot-id": "el8-x86_64-ansible-2",
+        "storage": "rhvpn"
+}
