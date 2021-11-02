@@ -1,0 +1,6 @@
+{
+        "base-url": "http://download.eng.bos.redhat.com/rhel-9/rel-eng/RHUI/latest-RHUI-Client-4-RHEL-9/compose/RHUI/x86_64/os/",
+        "platform-id": "el9",
+        "snapshot-id": "el9-x86_64-rhui-4",
+        "storage": "rhvpn"
+}
