@@ -1,0 +1,6 @@
+{
+        "base-url": "https://composes.stream.centos.org/production/latest-CentOS-Stream/compose/BaseOS/ppc64le/os/",
+        "platform-id": "el9",
+        "snapshot-id": "cs9-ppc64le-baseos",
+        "storage": "public"
+}

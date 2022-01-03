@@ -1,0 +1,6 @@
+{
+        "base-url": "https://composes.stream.centos.org/production/latest-CentOS-Stream/compose/BaseOS/s390x/os/",
+        "platform-id": "el9",
+        "snapshot-id": "cs9-s390x-baseos",
+        "storage": "public"
+}
