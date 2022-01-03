@@ -1,0 +1,6 @@
+{
+        "base-url": "https://composes.stream.centos.org/production/latest-CentOS-Stream/compose/AppStream/ppc64le/os/",
+        "platform-id": "el8",
+        "snapshot-id": "cs8-ppc64le-appstream",
+        "storage": "public"
+}
