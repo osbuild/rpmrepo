@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/updates/35/Everything/x86_64/",
+        "platform-id": "f35",
+        "snapshot-id": "f35-x86_64-updates-released",
+        "storage": "public"
+}

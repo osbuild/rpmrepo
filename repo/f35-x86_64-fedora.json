@@ -1,0 +1,7 @@
+{
+        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/releases/35/Everything/x86_64/os/",
+        "platform-id": "f35",
+        "singleton": "20220106",
+        "snapshot-id": "f35-x86_64-fedora",
+        "storage": "public"
+}
