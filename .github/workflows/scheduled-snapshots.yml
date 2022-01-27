@@ -1,0 +1,108 @@
+name: Scheduled rpmrepo snapshot
+
+on:
+  schedule:
+    - cron: '0 0 1,15 * *' # 1st and 15th of every month
+
+jobs:
+  update-snapshots:
+    name: "Scheduled rpmrepo snapshot"
+    timeout-minutes: 2880 # 2 days timeout
+    runs-on: ubuntu-latest
+    steps:
+
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Clone repository
+      uses: actions/checkout@v2.3.4
+
+    - name: Count jobs
+      id: count_jobs
+      run: echo ::set-output name=size::$(find repo -name "*json" | wc -l)
+
+    - name: Generate suffix
+      id: generate_suffix
+      run: echo ::set-output name=suffix::$(date '+%Y%m%d')
+
+    - name: Submit array job
+      id: submit_job
+      run: |
+        echo size ${{ steps.count_jobs.outputs.size }} sha ${GITHUB_SHA}
+
+        aws batch submit-job \
+          --job-name "snapshot-runner" \
+          --job-definition "rpmrepo-batch-snapshot-staging" \
+          --job-queue "rpmrepo-batch-staging" \
+          --timeout "86400" \
+          --array-properties "size=${{ steps.count_jobs.outputs.size }}" \
+          --parameters "repoCommit=$GITHUB_SHA,repoBranch=main,repoSuffix=${{ steps.generate_suffix.outputs.suffix }},repoTarget=auto" \
+          > out.json
+        echo ::set-output name=job_id::$(jq .jobId out.json)
+        echo ::set-output name=job_name::$(jq .jobName out.json)
+
+    - name: Wait for jobs to finish
+      id: wait_for_jobs
+      run: |
+        while true; do
+          PENDING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.job_id }} --job-status PENDING | jq '.jobSummaryList | length')
+          RUNNABLE=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.job_id }} --job-status RUNNABLE | jq '.jobSummaryList | length')
+          STARTING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.job_id }} --job-status STARTING | jq '.jobSummaryList | length')
+          RUNNING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.job_id }} --job-status RUNNING | jq '.jobSummaryList | length')
+
+          if [ $((PENDING + RUNNABLE + STARTING + RUNNING)) = 0 ]; then
+            break
+          fi
+          sleep 5m
+        done
+
+        aws batch list-jobs --array-job-id ${{ steps.submit_job.job_id }} --job-status FAILED > failed.json
+        if [ $(jq '.jobSummaryList | length' failed.json) != 0 ]; then
+          echo Failed jobs!
+          jq . failed.json
+        fi
+        SUCCEEDED=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.job_id }} --job-status SUCCEEDED | jq '.jobSummaryList | length')
+        echo ::set-output name=succeeded::$(jq '.jobSummaryList | length' failed.json)
+        echo ::set-output name=failed::$(jq '.jobSummaryList | length' failed.json)
+
+    - name: Clone osbuild-composer repository
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: osbuild/osbuild-composer
+        path: osbuild-composer
+
+    - name: Update schutzfile and open PR
+      env:
+        GITHUB_TOKEN: ${{ secrets.SCHUTZBOT_GH_TOKEN }}
+      run: |
+        pushd osbuild-composer
+        sed -i -E 's/("baseurl": ".*)-[0-9]{8,12}\/?"/\1-${{ steps.generate_suffix.outputs.suffix }}"/g' Schutzfile
+        git diff
+        git config --unset-all http.https://github.com/.extraheader
+        git config user.name "schutzbot"
+        git config user.email "schutzbot@gmail.com"
+        git checkout -b snapshots-${{ steps.generate_suffix.outputs.suffix }}
+        git add Schutzfile
+        git commit -m "schutzfile: Update snapshots to ${{ steps.generate_suffix.outputs.suffix }}"
+        git push https://${{ secrets.SCHUTZBOT_GH_TOKEN }}@github.com/schutzbot/osbuild-composer.git
+
+
+
+        cat <<EOF > "body"
+        Job(s) succeeded: ${{ steps.wait_for_jobs.outputs.succeeded }}
+        Job(s) failed: ${{ steps.wait_for_jobs.outputs.failed }}
+        Workflow run: https://github.com/osbuild/rpmrepo/actions/runs/${{ github.run_number }}
+        EOF
+
+        gh pr create \
+          -t "Update snapshots to ${{ steps.generate_suffix.outputs.suffix }}" \
+          -F "body" \
+          --repo "osbuild/osbuild-composer" \
+          --base "main" \
+          --head "schutzbot:snapshots-${{ steps.generate_suffix.outputs.suffix }}"
+        popd
+
