@@ -43,30 +43,31 @@ jobs:
           --array-properties "size=${{ steps.count_jobs.outputs.size }}" \
           --parameters "repoCommit=$GITHUB_SHA,repoBranch=main,repoSuffix=${{ steps.generate_suffix.outputs.suffix }},repoTarget=auto" \
           > out.json
-        echo ::set-output name=job_id::$(jq .jobId out.json)
-        echo ::set-output name=job_name::$(jq .jobName out.json)
+        echo ::set-output name=job_id::$(jq -r .jobId out.json)
+        echo ::set-output name=job_name::$(jq -r .jobName out.json)
 
     - name: Wait for jobs to finish
       id: wait_for_jobs
       run: |
         while true; do
-          PENDING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.job_id }} --job-status PENDING | jq '.jobSummaryList | length')
-          RUNNABLE=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.job_id }} --job-status RUNNABLE | jq '.jobSummaryList | length')
-          STARTING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.job_id }} --job-status STARTING | jq '.jobSummaryList | length')
-          RUNNING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.job_id }} --job-status RUNNING | jq '.jobSummaryList | length')
+          PENDING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status PENDING | jq '.jobSummaryList | length')
+          RUNNABLE=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status RUNNABLE | jq '.jobSummaryList | length')
+          STARTING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status STARTING | jq '.jobSummaryList | length')
+          RUNNING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status RUNNING | jq '.jobSummaryList | length')
 
           if [ $((PENDING + RUNNABLE + STARTING + RUNNING)) = 0 ]; then
             break
           fi
+          echo Pending $PENDING, Runnable $RUNNABLE, Starting $STARTING, Running $RUNNING
           sleep 5m
         done
 
-        aws batch list-jobs --array-job-id ${{ steps.submit_job.job_id }} --job-status FAILED > failed.json
+        aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status FAILED > failed.json
         if [ $(jq '.jobSummaryList | length' failed.json) != 0 ]; then
           echo Failed jobs!
           jq . failed.json
         fi
-        SUCCEEDED=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.job_id }} --job-status SUCCEEDED | jq '.jobSummaryList | length')
+        SUCCEEDED=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status SUCCEEDED | jq '.jobSummaryList | length')
         echo ::set-output name=succeeded::$(jq '.jobSummaryList | length' failed.json)
         echo ::set-output name=failed::$(jq '.jobSummaryList | length' failed.json)
 
