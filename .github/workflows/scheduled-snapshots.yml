@@ -3,6 +3,7 @@ name: Scheduled rpmrepo snapshot
 on:
   schedule:
     - cron: '0 0 1,15 * *' # 1st and 15th of every month
+  workflow_dispatch:
 
 jobs:
   update-snapshots:
