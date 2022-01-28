@@ -92,8 +92,6 @@ jobs:
         git commit -m "schutzfile: Update snapshots to ${{ steps.generate_suffix.outputs.suffix }}"
         git push https://${{ secrets.SCHUTZBOT_GH_TOKEN }}@github.com/schutzbot/osbuild-composer.git
 
-
-
         cat <<EOF > "body"
         Job(s) succeeded: ${{ steps.wait_for_jobs.outputs.succeeded }}
         Job(s) failed: ${{ steps.wait_for_jobs.outputs.failed }}
