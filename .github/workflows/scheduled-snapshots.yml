@@ -39,7 +39,7 @@ jobs:
           --job-name "snapshot-runner" \
           --job-definition "rpmrepo-batch-snapshot-staging" \
           --job-queue "rpmrepo-batch-staging" \
-          --timeout "86400" \
+          --timeout "attemptDurationSeconds=86400" \
           --array-properties "size=${{ steps.count_jobs.outputs.size }}" \
           --parameters "repoCommit=$GITHUB_SHA,repoBranch=main,repoSuffix=${{ steps.generate_suffix.outputs.suffix }},repoTarget=auto" \
           > out.json
