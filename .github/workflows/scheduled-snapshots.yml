@@ -50,15 +50,16 @@ jobs:
       id: wait_for_jobs
       run: |
         while true; do
+          SUBMITTED=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status SUBMITTED | jq '.jobSummaryList | length')
           PENDING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status PENDING | jq '.jobSummaryList | length')
           RUNNABLE=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status RUNNABLE | jq '.jobSummaryList | length')
           STARTING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status STARTING | jq '.jobSummaryList | length')
           RUNNING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status RUNNING | jq '.jobSummaryList | length')
 
-          if [ $((PENDING + RUNNABLE + STARTING + RUNNING)) = 0 ]; then
+          if [ $((SUBMITTED + PENDING + RUNNABLE + STARTING + RUNNING)) = 0 ]; then
             break
           fi
-          echo Pending $PENDING, Runnable $RUNNABLE, Starting $STARTING, Running $RUNNING
+          echo Submitted $SUBMITTED, Pending $PENDING, Runnable $RUNNABLE, Starting $STARTING, Running $RUNNING
           sleep 5m
         done
 
@@ -76,6 +77,7 @@ jobs:
       with:
         repository: osbuild/osbuild-composer
         path: osbuild-composer
+        fetch-depth: 0
 
     - name: Update schutzfile and open PR
       env:
