@@ -46,6 +46,22 @@ jobs:
         echo ::set-output name=job_id::$(jq -r .jobId out.json)
         echo ::set-output name=job_name::$(jq -r .jobName out.json)
 
+    - name: Wait for jobs to start
+      id: wait_for_jobs_start
+      run: |
+        while true; do
+          SUBMITTED=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status SUBMITTED | jq '.jobSummaryList | length')
+          PENDING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status PENDING | jq '.jobSummaryList | length')
+          RUNNABLE=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status RUNNABLE | jq '.jobSummaryList | length')
+          STARTING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status STARTING | jq '.jobSummaryList | length')
+          RUNNING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status RUNNING | jq '.jobSummaryList | length')
+
+          if [ $((SUBMITTED + PENDING + RUNNABLE + STARTING + RUNNING)) -gt 0 ]; then
+            break
+          fi
+          sleep 30s
+        done
+
     - name: Wait for jobs to finish
       id: wait_for_jobs
       run: |
