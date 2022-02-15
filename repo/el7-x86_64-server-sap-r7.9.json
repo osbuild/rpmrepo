@@ -1,0 +1,6 @@
+{
+        "base-url": "http://download.eng.bos.redhat.com/rhel-7/rel-eng/RHEL-7/latest-RHEL-7.9/compose/Server-SAP/x86_64/os/",
+        "platform-id": "el7",
+        "snapshot-id": "el7-x86_64-server-sap-r7.9",
+        "storage": "rhvpn"
+}

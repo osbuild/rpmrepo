@@ -1,0 +1,6 @@
+{
+        "base-url": "http://download.eng.bos.redhat.com/rhel-7/rel-eng/dotNET-1.1-RHEL-7-20161128.0/compose/Server/x86_64/",
+        "platform-id": "el7",
+        "snapshot-id": "el7-x86_64-server-dotnet-r1.1",
+        "storage": "rhvpn"
+}
