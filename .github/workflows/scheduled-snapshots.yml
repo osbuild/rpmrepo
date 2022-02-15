@@ -85,7 +85,7 @@ jobs:
           jq . failed.json
         fi
         SUCCEEDED=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status SUCCEEDED | jq '.jobSummaryList | length')
-        echo ::set-output name=succeeded::$(jq '.jobSummaryList | length' failed.json)
+        echo ::set-output name=succeeded::"$SUCCEEDED"
         echo ::set-output name=failed::$(jq '.jobSummaryList | length' failed.json)
 
     - name: Clone osbuild-composer repository
