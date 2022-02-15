@@ -1,0 +1,6 @@
+{
+        "base-url": "http://download.eng.bos.redhat.com/rhel-7/rel-eng/EXTRAS-7/latest-EXTRAS-7.9-RHEL-7/compose/Server/x86_64/os/",
+        "platform-id": "el7",
+        "snapshot-id": "el7-x86_64-server-extras-r7.9",
+        "storage": "rhvpn"
+}
