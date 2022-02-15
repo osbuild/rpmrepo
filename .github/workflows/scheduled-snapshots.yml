@@ -113,7 +113,7 @@ jobs:
         cat <<EOF > "body"
         Job(s) succeeded: ${{ steps.wait_for_jobs.outputs.succeeded }}
         Job(s) failed: ${{ steps.wait_for_jobs.outputs.failed }}
-        Workflow run: https://github.com/osbuild/rpmrepo/actions/runs/${{ github.run_number }}
+        Workflow run: https://github.com/osbuild/rpmrepo/actions/runs/${{ github.run_id }}
         EOF
 
         gh pr create \
