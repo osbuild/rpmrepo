@@ -1,0 +1,6 @@
+{
+        "base-url": "https://composes.stream.centos.org/production/latest-CentOS-Stream/compose/CRB/aarch64/os/",
+        "platform-id": "el9",
+        "snapshot-id": "cs9-aarch64-crb",
+        "storage": "public"
+}
