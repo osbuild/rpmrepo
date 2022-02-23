@@ -1,0 +1,6 @@
+{
+        "base-url": "https://packages.cloud.google.com/yum/repos/google-compute-engine-el9-x86_64-stable",
+        "platform-id": "el9",
+        "snapshot-id": "el9-x86_64-google-compute-engine",
+        "storage": "public"
+}

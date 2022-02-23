@@ -1,0 +1,6 @@
+{
+        "base-url": "https://packages.cloud.google.com/yum/repos/cloud-sdk-el9-x86_64",
+        "platform-id": "el9",
+        "snapshot-id": "el9-x86_64-google-cloud-sdk",
+        "storage": "public"
+}
