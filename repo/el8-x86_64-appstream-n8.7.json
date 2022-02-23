@@ -1,0 +1,6 @@
+{
+        "base-url": "http://download.eng.bos.redhat.com/rhel-8/nightly/RHEL-8/latest-RHEL-8.7/compose/AppStream/x86_64/os/",
+        "platform-id": "el8",
+        "snapshot-id": "el8-x86_64-appstream-n8.7",
+        "storage": "rhvpn"
+}
