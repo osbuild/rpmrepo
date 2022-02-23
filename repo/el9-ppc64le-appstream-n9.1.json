@@ -1,0 +1,6 @@
+{
+        "base-url": "http://download.eng.bos.redhat.com/rhel-9/nightly/RHEL-9/latest-RHEL-9.1/compose/AppStream/ppc64le/os/",
+        "platform-id": "el9",
+        "snapshot-id": "el9-ppc64le-appstream-n9.1",
+        "storage": "rhvpn"
+}
