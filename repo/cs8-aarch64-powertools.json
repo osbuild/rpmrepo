@@ -1,0 +1,6 @@
+{
+        "base-url": "http://msync.centos.org/centos/8-stream/PowerTools/aarch64/os/",
+        "platform-id": "el8",
+        "snapshot-id": "cs8-aarch64-powertools",
+        "storage": "public"
+}
