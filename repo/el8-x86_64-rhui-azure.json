@@ -1,5 +1,5 @@
 {
-        "base-url": "http://download-node-02.eng.bos.redhat.com/devel/stratosphere/azure/RHEL-offers/RHEL-8/RHEL-8.6/",
+        "base-url": "http://download.eng.bos.redhat.com/devel/stratosphere/azure/RHEL-offers/RHEL-8/Packages/",
         "platform-id": "el8",
         "snapshot-id": "el8-x86_64-rhui-azure",
         "storage": "rhvpn"
