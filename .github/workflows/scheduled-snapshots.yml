@@ -82,8 +82,16 @@ jobs:
         aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status FAILED > failed.json
         if [ $(jq '.jobSummaryList | length' failed.json) != 0 ]; then
           echo Failed jobs!
-          jq . failed.json
+          for JOBID in $(jq -r '.jobSummaryList[].jobId' failed.json | xargs); do
+            LOGSTREAM=$(aws batch describe-jobs --jobs "$JOBID" | jq -r '.jobs[0].container.logStreamName')
+            echo "Logs for failed job \"$JOBID\":"
+            echo "fields @timestamp, @message"
+            echo "| filter @logStream = \"$LOGSTREAM\""
+            echo "| sort @timestamp desc"
+            echo
+          done
         fi
+
         SUCCEEDED=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status SUCCEEDED | jq '.jobSummaryList | length')
         echo ::set-output name=succeeded::"$SUCCEEDED"
         echo ::set-output name=failed::$(jq '.jobSummaryList | length' failed.json)
