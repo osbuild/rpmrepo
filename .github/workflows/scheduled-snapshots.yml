@@ -103,32 +103,29 @@ jobs:
         path: osbuild-composer
         fetch-depth: 0
 
-    - name: Update schutzfile and open PR
+    - name: Update schutzfile and open PR in osbuild-composer repository
       env:
         GITHUB_TOKEN: ${{ secrets.SCHUTZBOT_GH_TOKEN }}
-      run: |
-        pushd osbuild-composer
-        sed -i -E 's/("baseurl": ".*)-[0-9]{8,12}\/?"/\1-${{ steps.generate_suffix.outputs.suffix }}"/g' Schutzfile
-        git diff
-        git config --unset-all http.https://github.com/.extraheader
-        git config user.name "schutzbot"
-        git config user.email "schutzbot@gmail.com"
-        git checkout -b snapshots-${{ steps.generate_suffix.outputs.suffix }}
-        git add Schutzfile
-        git commit -m "schutzfile: Update snapshots to ${{ steps.generate_suffix.outputs.suffix }}"
-        git push https://${{ secrets.SCHUTZBOT_GH_TOKEN }}@github.com/schutzbot/osbuild-composer.git
+        SUFFIX: ${{ steps.generate_suffix.outputs.suffix }}
+        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs-outputs.succeeded }}
+        JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
+        WORKFLOW_RUN: ${{ github.run_id }}
+        REPO: "osbuild-composer"
+      run: .github/scripts/snapshot_update_pr.sh
 
-        cat <<EOF > "body"
-        Job(s) succeeded: ${{ steps.wait_for_jobs.outputs.succeeded }}
-        Job(s) failed: ${{ steps.wait_for_jobs.outputs.failed }}
-        Workflow run: https://github.com/osbuild/rpmrepo/actions/runs/${{ github.run_id }}
-        EOF
+    - name: Clone osbuild repository
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: osbuild/osbuild
+        path: osbuild
+        fetch-depth: 0
 
-        gh pr create \
-          -t "Update snapshots to ${{ steps.generate_suffix.outputs.suffix }}" \
-          -F "body" \
-          --repo "osbuild/osbuild-composer" \
-          --base "main" \
-          --head "schutzbot:snapshots-${{ steps.generate_suffix.outputs.suffix }}"
-        popd
-
+    - name: Update schutzfile and open PR in osbuild repository
+      env:
+        GITHUB_TOKEN: ${{ secrets.SCHUTZBOT_GH_TOKEN }}
+        SUFFIX: ${{ steps.generate_suffix.outputs.suffix }}
+        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs-outputs.succeeded }}
+        JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
+        WORKFLOW_RUN: ${{ github.run_id }}
+        REPO: "osbuild"
+      run: .github/scripts/snapshot_update_pr.sh
