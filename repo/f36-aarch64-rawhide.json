@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/aarch64/os/",
+        "platform-id": "f36",
+        "snapshot-id": "f36-aarch64-rawhide",
+        "storage": "public"
+}
