@@ -1,0 +1,6 @@
+{
+        "base-url": "http://download.eng.bos.redhat.com/devel/stratosphere/azure/RHEL-offers/RHEL-9/Packages/",
+        "platform-id": "el9",
+        "snapshot-id": "el9-x86_64-rhui-azure",
+        "storage": "rhvpn"
+}
