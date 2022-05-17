@@ -233,7 +233,14 @@ def _run_enumerate(arguments):
 
     results = []
     paginator = s3c.get_paginator("list_objects_v2")
-    pages = paginator.paginate(Bucket="rpmrepo-storage", Prefix=prefix)
+    pages = paginator.paginate(
+        Bucket="rpmrepo-storage",
+        Prefix=prefix,
+        # S3 limits this to 1000 currently, but maybe not forever. Lets try to
+        # fetch more to avoid repeated requests, which significantly slow down
+        # the operation.
+        PaginationConfig={'PageSize': 16384},
+    )
 
     for page in pages:
         for entry in page.get("Contents", []):
