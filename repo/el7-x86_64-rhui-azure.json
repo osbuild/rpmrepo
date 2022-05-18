@@ -1,0 +1,6 @@
+{
+        "base-url": "http://download-node-02.eng.bos.redhat.com/devel/stratosphere/azure/RHEL-offers/RHEL-7/Packages/",
+        "platform-id": "el7",
+        "snapshot-id": "el7-x86_64-rhui-azure",
+        "storage": "rhvpn"
+}
