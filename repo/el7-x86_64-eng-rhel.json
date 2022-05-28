@@ -1,0 +1,6 @@
+{
+        "base-url": "http://download.eng.brq.redhat.com/rel-eng/repos/eng-rhel-7/x86_64/",
+        "platform-id": "el7",
+        "snapshot-id": "el7-x86_64-eng-rel",
+        "storage": "rhvpn"
+}
