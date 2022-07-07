@@ -1,0 +1,30 @@
+#
+# CI Repo Configuration
+#
+# This verifies the formatting of the repository configurations in ./repo/ and
+# tries to verify external references.
+#
+
+name: "CI Repo Configuration"
+
+on:
+  pull_request:
+  push:
+  workflow_dispatch:
+
+jobs:
+  #
+  # Run repo-check.py
+  #
+  repo-check:
+    name: "Repo Configuration Check"
+    runs-on: ubuntu-latest
+    container:
+      image: ghcr.io/osbuild/rpmrepo-ci:latest
+    steps:
+    - name: "Clone Repository"
+      uses: actions/checkout@v2
+    - name: "Run repo-check"
+      run: |
+        ./src/script/repo-check.py ./repo/*.json
+        ./src/script/repo-check.py --check-external public ./repo/*.json

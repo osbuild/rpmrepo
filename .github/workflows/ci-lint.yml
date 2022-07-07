@@ -29,4 +29,5 @@ jobs:
         python3 -m pylint \
           --disable duplicate-code \
           src/ctl \
-          src/gateway/*.py
+          src/gateway/*.py \
+          src/script/*.py
