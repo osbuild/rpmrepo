@@ -83,8 +83,8 @@ class Pull(contextlib.AbstractContextManager):
         ]
 
         sys.stdout.flush()
-        proc = subprocess.Popen(cmd)
-        return proc.wait()
+        with subprocess.Popen(cmd) as proc:
+            return proc.wait()
 
     def pull(self):
         """Run operation"""
@@ -96,4 +96,5 @@ class Pull(contextlib.AbstractContextManager):
         if ret != 0:
             raise RuntimeError(f"Failed during dnf reposync with exitcode '{ret}'")
 
-        open(os.path.join(self._path_conf, "repo.ok"), "wb").close()
+        with open(os.path.join(self._path_conf, "repo.ok"), "wb"):
+            pass

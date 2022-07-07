@@ -90,4 +90,5 @@ class Index(contextlib.AbstractContextManager):
                         follow_symlinks=False,
                     )
 
-        open(os.path.join(self._path_conf, "index.ok"), "wb").close()
+        with open(os.path.join(self._path_conf, "index.ok"), "wb"):
+            pass
