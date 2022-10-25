@@ -1,0 +1,6 @@
+{
+        "base-url": "https://download-node-02.eng.bos.redhat.com/devel/stratosphere/azure/RHEL-offers/RHEL-9-SAP-HA/",
+        "platform-id": "el8",
+        "snapshot-id": "el8-x86_64-sap-rhui-azure",
+        "storage": "rhvpn"
+}
