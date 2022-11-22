@@ -24,11 +24,11 @@ jobs:
 
     - name: Count jobs
       id: count_jobs
-      run: echo ::set-output name=size::$(find repo -name "*json" | wc -l)
+      run: echo "size=$(find repo -name '*json' | wc -l)" >>$GITHUB_OUTPUT
 
     - name: Generate suffix
       id: generate_suffix
-      run: echo ::set-output name=suffix::$(date '+%Y%m%d')
+      run: echo "suffix=$(date '+%Y%m%d')" >>$GITHUB_OUTPUT
 
     - name: Submit array job
       id: submit_job
@@ -43,8 +43,8 @@ jobs:
           --array-properties "size=${{ steps.count_jobs.outputs.size }}" \
           --parameters "repoCommit=$GITHUB_SHA,repoBranch=main,repoSuffix=${{ steps.generate_suffix.outputs.suffix }},repoTarget=auto" \
           > out.json
-        echo ::set-output name=job_id::$(jq -r .jobId out.json)
-        echo ::set-output name=job_name::$(jq -r .jobName out.json)
+        echo "job_id=$(jq -r .jobId out.json)" >>$GITHUB_OUTPUT
+        echo "job_name=$(jq -r .jobName out.json)" >>$GITHUB_OUTPUT
 
     - name: Wait for jobs to start
       id: wait_for_jobs_start
@@ -93,8 +93,8 @@ jobs:
         fi
 
         SUCCEEDED=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status SUCCEEDED | jq '.jobSummaryList | length')
-        echo ::set-output name=succeeded::"$SUCCEEDED"
-        echo ::set-output name=failed::$(jq '.jobSummaryList | length' failed.json)
+        echo "succeeded=$SUCCEEDED" >>$GITHUB_OUTPUT
+        echo "failed=$(jq '.jobSummaryList | length' failed.json)" >>$GITHUB_OUTPUT
 
     - name: Clone osbuild-composer repository
       uses: actions/checkout@v2.3.4
