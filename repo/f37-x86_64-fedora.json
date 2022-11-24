@@ -1,0 +1,7 @@
+{
+        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/releases/37/Everything/x86_64/os/",
+        "platform-id": "f37",
+        "singleton": "20221124",
+        "snapshot-id": "f37-x86_64-fedora",
+        "storage": "public"
+}
