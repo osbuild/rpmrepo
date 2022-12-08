@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl.fedoraproject.org/pub/epel/8/Everything/aarch64/",
+        "platform-id": "el8",
+        "snapshot-id": "cs8-aarch64-epel",
+        "storage": "public"
+}
