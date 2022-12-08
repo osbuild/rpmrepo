@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl.fedoraproject.org/pub/epel/9/Everything/s390x/",
+        "platform-id": "el9",
+        "snapshot-id": "cs9-s390x-epel",
+        "storage": "public"
+}

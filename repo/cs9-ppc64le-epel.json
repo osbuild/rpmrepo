@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl.fedoraproject.org/pub/epel/9/Everything/ppc64le/",
+        "platform-id": "el9",
+        "snapshot-id": "cs9-ppc64le-epel",
+        "storage": "public"
+}
