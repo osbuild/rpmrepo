@@ -83,11 +83,10 @@ jobs:
         if [ $(jq '.jobSummaryList | length' failed.json) != 0 ]; then
           echo Failed jobs!
           for JOBID in $(jq -r '.jobSummaryList[].jobId' failed.json | xargs); do
-            LOGSTREAM=$(aws batch describe-jobs --jobs "$JOBID" | jq -r '.jobs[0].container.logStreamName')
+            LOGSTREAM_NAME=$(aws batch describe-jobs --jobs "$JOBID" | jq -r '.jobs[0].container.logStreamName')
+            LOGS="$(aws logs get-log-events --log-group-name /aws/batch/job --log-stream-name "$LOGSTREAM_NAME" --start-from-head | jq -r '.events[].message')"
             echo "Logs for failed job \"$JOBID\":"
-            echo "fields @timestamp, @message"
-            echo "| filter @logStream = \"$LOGSTREAM\""
-            echo "| sort @timestamp desc"
+            echo "$LOGS"
             echo
           done
         fi
