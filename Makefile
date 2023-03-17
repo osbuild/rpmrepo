@@ -110,3 +110,16 @@ $(BUILDDIR)/gateway/rpmrepo-gateway-%.zip: $(GATEWAY_SOURCES) | $(BUILDDIR)/gate
 
 .PHONY: gateway-zip
 gateway-zip: $(BUILDDIR)/gateway/rpmrepo-gateway-main.zip
+
+#
+# Regenerate all snapshot configs from definitions
+#
+# This target regenerates all snapshot configuration files from the current
+# definiton stored in `repo-definitions.yaml`. Before generating snapshot
+# configuration files into `repo/`, it will first delete the whole content
+# of the directory.
+
+.PHONY: snapshot-configs
+snapshot-configs:
+	rm -f $(SRCDIR)/repo/*.json
+	./gen-all-repos.py --definitions $(SRCDIR)/repo-definitions.yaml --output $(SRCDIR)/repo/
