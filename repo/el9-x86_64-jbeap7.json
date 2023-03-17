@@ -1,6 +1,6 @@
 {
-  "base-url": "http://download.eng.bos.redhat.com/released/jboss/eap7/latest-released/JBEAP-7-RHEL-9/Server/x86_64/os/",
-  "platform-id": "el9",
-  "snapshot-id": "el9-x86_64-jbeap7",
-  "storage": "rhvpn"
+        "base-url": "http://download.eng.bos.redhat.com/released/jboss/eap7/latest-released/JBEAP-7-RHEL-9/Server/x86_64/os/",
+        "platform-id": "el9",
+        "snapshot-id": "el9-x86_64-jbeap7",
+        "storage": "rhvpn"
 }
