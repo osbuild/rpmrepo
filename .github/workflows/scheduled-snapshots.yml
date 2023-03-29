@@ -128,3 +128,13 @@ jobs:
         WORKFLOW_RUN: ${{ github.run_id }}
         REPO: "osbuild"
       run: .github/scripts/snapshot_update_pr.sh
+
+    - name: Update schutzfile and open PR in cloud-image-val repository
+      env:
+        GITHUB_TOKEN: ${{ secrets.SCHUTZBOT_GH_TOKEN }}
+        SUFFIX: ${{ steps.generate_suffix.outputs.suffix }}
+        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs-outputs.succeeded }}
+        JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
+        WORKFLOW_RUN: ${{ github.run_id }}
+        REPO: "cloud-image-val"
+      run: .github/scripts/snapshot_update_pr.sh
