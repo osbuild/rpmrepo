@@ -129,6 +129,13 @@ jobs:
         REPO: "osbuild"
       run: .github/scripts/snapshot_update_pr.sh
 
+    - name: Clone cloud image val repository
+      uses: actions/checkout@v2.3.4
+      with:
+        repository: osbuild/cloud-image-val
+        path: cloud-image-val
+        fetch-depth: 0
+
     - name: Update schutzfile and open PR in cloud-image-val repository
       env:
         GITHUB_TOKEN: ${{ secrets.SCHUTZBOT_GH_TOKEN }}
