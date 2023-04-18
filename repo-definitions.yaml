@@ -29,7 +29,7 @@ rhel:
 - release: '7.9'
   arch:
     - x86_64
-  base_url: http://download-node-02.eng.bos.redhat.com/devel/stratosphere/azure/RHEL-offers/RHEL-7/
+  base_url: http://download.eng.bos.redhat.com/devel/stratosphere-rhui-sync/rhui-microsoft-azure-rhel7/
   snapshot_id_suffix: rhui-azure
 - release: '7.9'
   arch:
@@ -78,12 +78,12 @@ rhel:
 - release: '8.0'
   arch:
     - x86_64
-  base_url: http://download.eng.bos.redhat.com/devel/stratosphere/azure/RHEL-offers/RHEL-8/
+  base_url: http://download.eng.bos.redhat.com/devel/stratosphere-rhui-sync/rhui-microsoft-azure-rhel8/
   snapshot_id_suffix: rhui-azure
 - release: '8.0'
   arch:
     - x86_64
-  base_url: http://download-node-02.eng.bos.redhat.com/devel/stratosphere/azure/RHEL-offers/RHEL-9-SAP-HA/
+  base_url: http://download.eng.bos.redhat.com/devel/stratosphere-rhui-sync/rhui-microsoft-azure-rhel8-sap-ha/
   snapshot_id_suffix: sap-rhui-azure
 - release: '8.0'
   arch:
@@ -184,7 +184,7 @@ rhel:
 - release: '9.0'
   arch:
     - x86_64
-  base_url: http://download.eng.bos.redhat.com/devel/stratosphere/azure/RHEL-offers/RHEL-9/
+  base_url: http://download.eng.bos.redhat.com/devel/stratosphere-rhui-sync/rhui-microsoft-azure-rhel9/
   snapshot_id_suffix: rhui-azure
 - release: '9.0'
   arch:
