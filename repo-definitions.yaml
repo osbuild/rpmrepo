@@ -215,19 +215,17 @@ rhel:
 
 fedora:
 # stable releases
-- release: '36'
-  stream: releases
-  singleton: '20220617'
-- release: '36'
-  stream: updates
 - release: '37'
   stream: releases
   singleton: '20221124'
 - release: '37'
   stream: updates
-# branched, in-development release
 - release: '38'
-  stream: development
+  stream: releases
+  singleton: '20230413'
+- release: '38'
+  stream: updates
+# branched, in-development release
 # rawhide
 - release: '39'
   stream: rawhide

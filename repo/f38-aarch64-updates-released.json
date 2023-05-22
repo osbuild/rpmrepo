@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/updates/38/Everything/aarch64/",
+        "platform-id": "f38",
+        "snapshot-id": "f38-aarch64-updates-released",
+        "storage": "public"
+}
