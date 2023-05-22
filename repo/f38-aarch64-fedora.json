@@ -1,0 +1,7 @@
+{
+        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/releases/38/Everything/aarch64/os/",
+        "platform-id": "f38",
+        "singleton": "20230413",
+        "snapshot-id": "f38-aarch64-fedora",
+        "storage": "public"
+}
