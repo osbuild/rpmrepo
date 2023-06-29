@@ -132,7 +132,7 @@ class Repo:
         url = urllib.parse.urlparse(self._data["base-url"])
         url = url._replace(path=urllib.parse.urljoin(url.path, "repodata/repomd.xml"))
 
-        h = requests.head(urllib.parse.urlunparse(url))
+        h = requests.head(urllib.parse.urlunparse(url), timeout=60)
         if h.status_code != 200:
             raise ValueError(f"Cannot fetch repomd.xml: {urllib.parse.urlunparse(url)} {h}")
 
