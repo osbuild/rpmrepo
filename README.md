@@ -206,6 +206,15 @@ The backend implementation of RPMrepo involves the following steps:
     configurations that are no longer present in the definition file, and
     generate new ones.
 
+### List Available Snapshots
+
+If you just need a list of the available snapshots you can query the API like
+this:
+
+    `curl https://rpmrepo.osbuild.org/v2/enumerate | jq .`
+
+Which will return a JSON list of the snapshots names.
+
 ### Repository:
 
  - **web**:   <https://github.com/osbuild/rpmrepo>
