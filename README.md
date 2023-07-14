@@ -26,8 +26,11 @@ RedHat-private RPM repositories and provide them for a fixed amount of time
 on our own infrastructure.
 
 Our infrastructure is maintained via the OSBuild Terraform configuration. See
-the `osbuild/image-builder-terraform` repository, in particular the
-`rpmrepo.tf` configuration.
+the
+[image-builder-terraform](https://github.com/osbuild/image-builder-terraform)
+repository, in particular the
+[rpmrepo.tf](https://github.com/osbuild/image-builder-terraform/blob/main/rpmrepo.tf)
+configuration.
 
 For user documentation on RPMrepo, see: <https://osbuild.org/rpmrepo/>
 
