@@ -22,6 +22,7 @@ rhel:
   base_url: http://download.eng.bos.redhat.com/rhel-7/rel-eng/EXTRAS-7/latest-EXTRAS-7.9-RHEL-7/compose/Server/x86_64/os/
   snapshot_id_suffix: server-extras-r7.9
 - release: '7.9'
+  singleton: '20230809'
   arch:
     - x86_64
   base_url: http://download.eng.bos.redhat.com/rhel-7/rel-eng/dotNET-1.1-RHEL-7-20161128.0/compose/Server/x86_64/os/
@@ -51,6 +52,7 @@ rhel:
   arch:
     - x86_64
   released: true
+  singleton: '20230809'
   repo_name:
     - Server
     - Server-SAP
@@ -106,11 +108,13 @@ rhel:
 # Snapshots of RHEL-8.2 repos
 - release: '8.2'
   released: true
+  singleton: '20230809'
   repo_name:
     - BaseOS
     - AppStream
 - release: '8.2'
   released: true
+  singleton: '20230809'
   arch:
     - x86_64
   repo_name:
@@ -118,11 +122,13 @@ rhel:
 # Snapshots of RHEL-8.3 repos
 - release: '8.3'
   released: true
+  singleton: '20230809'
   repo_name:
     - BaseOS
     - AppStream
 - release: '8.3'
   released: true
+  singleton: '20230809'
   arch:
     - x86_64
   repo_name:
@@ -130,11 +136,13 @@ rhel:
 # Snapshots of RHEL-8.4 repos
 - release: '8.4'
   released: true
+  singleton: '20230809'
   repo_name:
     - BaseOS
     - AppStream
 - release: '8.4'
   released: true
+  singleton: '20230809'
   arch:
     - x86_64
   repo_name:
@@ -145,11 +153,13 @@ rhel:
 # Snapshots of RHEL-8.5 repos
 - release: '8.5'
   released: true
+  singleton: '20230809'
   repo_name:
     - BaseOS
     - AppStream
 - release: '8.5'
   released: true
+  singleton: '20230809'
   arch:
     - x86_64
   repo_name:
@@ -159,6 +169,7 @@ rhel:
 # Snapshots of RHEL-8.6 repos
 - release: '8.6'
   released: true
+  singleton: '20230809'
   arch:
     - x86_64
   repo_name:
