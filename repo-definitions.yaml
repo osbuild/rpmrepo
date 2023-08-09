@@ -163,10 +163,10 @@ rhel:
     - x86_64
   repo_name:
     - SAPHANA
-# Snapshots of RHEL-8.8 nightly repos
-- release: '8.8'
 # Snapshots of RHEL-8.9 nightly repos
 - release: '8.9'
+# Snapshots of RHEL-8.10 nightly repos
+- release: '8.10'
 
 # RHEL-9
 # Snapshots of RHEL-9 repos that do not change per minor release
@@ -204,8 +204,6 @@ rhel:
   snapshot_id_suffix: google-cloud-sdk
   storage: public
 
-# Snapshots of RHEL-9.2 nightly repos
-- release: '9.2'
 # Snapshots of RHEL-9.3 nightly repos
 - release: '9.3'
 
