@@ -236,7 +236,7 @@ class FedoraRepoConfigGenerator(BaseRepoConfigGenerator):
 
     @staticmethod
     def default_repo_names(arch, release):
-        return ['Everything', 'Modular']
+        return ['Everything']
 
     def get_base_url(self):
         if self.base_url is not None:
