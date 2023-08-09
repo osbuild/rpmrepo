@@ -1,6 +1,6 @@
 {
         "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/development/rawhide/Modular/x86_64/os/",
-        "platform-id": "f39",
-        "snapshot-id": "f39-x86_64-rawhide-modular",
+        "platform-id": "f40",
+        "snapshot-id": "f40-x86_64-rawhide-modular",
         "storage": "public"
 }

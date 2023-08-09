@@ -226,6 +226,8 @@ fedora:
 - release: '38'
   stream: updates
 # branched, in-development release
-# rawhide
 - release: '39'
+  stream: development
+# rawhide
+- release: '40'
   stream: rawhide
