@@ -1,6 +1,0 @@
-{
-        "base-url": "http://download.eng.bos.redhat.com/rhel-8/nightly/RHEL-8/latest-RHEL-8.8/compose/BaseOS/x86_64/os/",
-        "platform-id": "el8",
-        "snapshot-id": "el8-x86_64-baseos-n8.8",
-        "storage": "rhvpn"
-}
