@@ -6,8 +6,14 @@
 # run a helper script that updates Schutzfile with new snapshots
 python3 .github/scripts/update_schutzfile.py --repo "$REPO" --suffix "$SUFFIX"
 
+pushd "$REPO" || exit 2
+
+if [ -e ./tools/check-snapshots ]; then
+    echo "Checking snapshots..."
+    ./tools/check-snapshots --errors-only . || exit 1
+fi
+
 # Open PR with updated Schutzfile
-pushd "$REPO"
 git diff
 git config --unset-all http.https://github.com/.extraheader
 git config user.name "schutzbot"
@@ -29,4 +35,4 @@ gh pr create \
   --repo "osbuild/$REPO" \
   --base "main" \
   --head "schutzbot:snapshots-$SUFFIX"
-popd
+popd || exit 2
