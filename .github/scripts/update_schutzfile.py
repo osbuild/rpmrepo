@@ -7,7 +7,7 @@ import re
 import argparse
 
 
-def main(suffix, repo_folder):
+def main(suffix, repo_folder, dry_run):
     """
     This script is used to update Schutzfile in a speciffic repository. It
     takes --suffix which specifies which date you want to update the
@@ -16,10 +16,12 @@ def main(suffix, repo_folder):
     """
     repo_files = os.listdir("repo/")
     singletons = []
+    snapshots = []
     # Get a list of all repositories that contain 'singleton'
     for repo_file in repo_files:
         with open(os.path.join("repo", repo_file), "r") as file:
             data = json.load(file)
+        snapshots.append(data["snapshot-id"])
         if "singleton" in data.keys():
             singletons.append(data["snapshot-id"])
 
@@ -37,14 +39,22 @@ def main(suffix, repo_folder):
                             for singleton in singletons
                         ):
                             continue
+                        # Terribly inefficient way to check to see if the url has been removed
+                        if not any(snapshot in repo[arch_repos][i]["baseurl"]
+                                   for snapshot in snapshots):
+                            print(f"WARN: {repo[arch_repos][i]['baseurl']} has no current snapshot. Skipping it.")
+                            continue
                         repo[arch_repos][i]["baseurl"] = re.sub(
                             "[0-9]{8}",
                             suffix,
                             repo[arch_repos][i]["baseurl"],
                         )
 
-    with open(os.path.join(repo_folder, "Schutzfile"), "w") as file:
-        json.dump(data, file, indent=2)
+    if not dry_run:
+        with open(os.path.join(repo_folder, "Schutzfile"), "w") as file:
+            json.dump(data, file, indent=2)
+    else:
+        print(json.dumps(data, indent=2))
 
 
 if __name__ == "__main__":
@@ -63,5 +73,9 @@ if __name__ == "__main__":
         help="repository directory containing Schutzfile",
         required=True,
     )
+    parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Print the new Schutzfile instead of overwriting the old one.")
     args = parser.parse_args()
-    main(args.suffix, args.repo)
+    main(args.suffix, args.repo, args.dry_run)
