@@ -20,6 +20,9 @@ git config user.name "schutzbot"
 git config user.email "schutzbot@gmail.com"
 git checkout -b snapshots-"$SUFFIX"
 git add Schutzfile
+if [ -d "test/data/repositories/" ]; then
+    git add test/data/repositories/
+fi
 git commit -m "schutzfile: Update snapshots to ${SUFFIX}"
 git push https://"$GITHUB_TOKEN"@github.com/schutzbot/"$REPO".git
 

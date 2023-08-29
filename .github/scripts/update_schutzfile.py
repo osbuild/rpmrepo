@@ -56,6 +56,38 @@ def main(suffix, repo_folder, dry_run):
     else:
         print(json.dumps(data, indent=2))
 
+    # update repository snapshots in test/data/repositories/
+    # currently exists only for osbuild-composer
+    test_data_repositories_dir = os.path.join(repo_folder, "test/data/repositories/")
+    if os.path.exists(test_data_repositories_dir):
+        repo_json_files = os.listdir(test_data_repositories_dir)
+        for repo_file in repo_json_files:
+            with open(os.path.join(test_data_repositories_dir, repo_file), "r") as file:
+                data = json.load(file)
+
+            for arch in data.keys():
+                for repo in data[arch]:
+                    baseurl = repo["baseurl"]
+
+                    if any(singleton in baseurl for singleton in singletons):
+                        continue
+                    # Terribly inefficient way to check to see if the url has been removed
+                    if not any(snapshot in baseurl for snapshot in snapshots):
+                        print(f"WARN: {baseurl} has no current snapshot. Skipping it.")
+                        continue
+
+                    repo["baseurl"] = re.sub(
+                        "[0-9]{8}",
+                        suffix,
+                        baseurl,
+                    )
+
+            if not dry_run:
+                with open(os.path.join(test_data_repositories_dir, repo_file), "w") as file:
+                    json.dump(data, file, indent=2)
+            else:
+                print(json.dumps(data, indent=2))
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Updates Schutzfile repositories.")
