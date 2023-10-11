@@ -86,6 +86,7 @@ help:
 	@echo "targets are available:"
 	@echo
 	@echo "    help:               Print this usage information."
+	@echo "    snapshot-configs:   Regenerate all snapshot configs from definitions."
 
 $(BUILDDIR)/:
 	$(BIN_MKDIR) -p "$@"
