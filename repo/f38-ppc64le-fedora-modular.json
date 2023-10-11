@@ -1,0 +1,7 @@
+{
+        "base-url": "https://dl.fedoraproject.org/pub/fedora-secondary/releases/38/Modular/ppc64le/os/",
+        "platform-id": "f38",
+        "singleton": "20230413",
+        "snapshot-id": "f38-ppc64le-fedora-modular",
+        "storage": "public"
+}

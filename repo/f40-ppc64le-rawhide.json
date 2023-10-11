@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl.fedoraproject.org/pub/fedora-secondary/development/rawhide/Everything/ppc64le/os/",
+        "platform-id": "f40",
+        "snapshot-id": "f40-ppc64le-rawhide",
+        "storage": "public"
+}

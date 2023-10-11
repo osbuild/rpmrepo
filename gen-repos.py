@@ -220,6 +220,8 @@ class FedoraRepoConfigGenerator(BaseRepoConfigGenerator):
 
     FEDORA_BASE_URL_TEMPLATE = "https://dl01.fedoraproject.org/pub/fedora/linux/{stream}/{stream_release}/" + \
                                "{repo_name}/{arch}/os/"
+    FEDORA_SECONDARY_BASE_URL_TEMPLATE = "https://dl.fedoraproject.org/pub/fedora-secondary/{stream}/" + \
+                                         "{stream_release}/{repo_name}/{arch}/os/"
     RELEASE_STREAM = ['releases', 'updates', 'development', 'rawhide']
 
     # pylint: disable=too-many-arguments
@@ -232,7 +234,7 @@ class FedoraRepoConfigGenerator(BaseRepoConfigGenerator):
 
     @staticmethod
     def default_arches(release):
-        return ['x86_64', 'aarch64']
+        return ['x86_64', 'aarch64', 'ppc64le', 's390x']
 
     @staticmethod
     def default_repo_names(arch, release):
@@ -249,7 +251,11 @@ class FedoraRepoConfigGenerator(BaseRepoConfigGenerator):
             stream = self.stream
             stream_release = self.release
 
-        url = self.FEDORA_BASE_URL_TEMPLATE.format(
+        template = self.FEDORA_BASE_URL_TEMPLATE
+        if self.arch in ['ppc64le', 's390x']:
+            template = self.FEDORA_SECONDARY_BASE_URL_TEMPLATE
+
+        url = template.format(
             stream=stream,
             stream_release=stream_release,
             repo_name=self.repo_name,
