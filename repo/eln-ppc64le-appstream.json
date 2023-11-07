@@ -1,0 +1,6 @@
+{
+        "base-url": "https://odcs.fedoraproject.org/composes/production/latest-Fedora-ELN/compose/AppStream/ppc64le/os/",
+        "platform-id": "eln",
+        "snapshot-id": "eln-ppc64le-appstream",
+        "storage": "public"
+}

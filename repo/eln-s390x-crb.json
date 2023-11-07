@@ -1,0 +1,6 @@
+{
+        "base-url": "https://odcs.fedoraproject.org/composes/production/latest-Fedora-ELN/compose/CRB/s390x/os/",
+        "platform-id": "eln",
+        "snapshot-id": "eln-s390x-crb",
+        "storage": "public"
+}

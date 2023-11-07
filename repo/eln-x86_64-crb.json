@@ -1,0 +1,6 @@
+{
+        "base-url": "https://odcs.fedoraproject.org/composes/production/latest-Fedora-ELN/compose/CRB/x86_64/os/",
+        "platform-id": "eln",
+        "snapshot-id": "eln-x86_64-crb",
+        "storage": "public"
+}

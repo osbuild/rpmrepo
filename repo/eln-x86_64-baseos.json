@@ -1,0 +1,6 @@
+{
+        "base-url": "https://odcs.fedoraproject.org/composes/production/latest-Fedora-ELN/compose/BaseOS/x86_64/os/",
+        "platform-id": "eln",
+        "snapshot-id": "eln-x86_64-baseos",
+        "storage": "public"
+}

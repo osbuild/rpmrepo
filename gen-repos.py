@@ -288,6 +288,37 @@ class FedoraRepoConfigGenerator(BaseRepoConfigGenerator):
 
         return f'f{self.release}-{self.arch}-{snapshot_id_suffix}'
 
+
+class ELNRepoConfigGenerator(BaseRepoConfigGenerator):
+    """
+    Generate Fedora ELN repository files
+    """
+
+    FEDORA_BASE_URL_TEMPLATE = "https://odcs.fedoraproject.org/composes/production/latest-Fedora-ELN/compose/" + \
+                               "{repo_name}/{arch}/os/"
+
+    # pylint: disable=too-many-arguments
+    def __init__(self, arch, repo_name):
+        super().__init__(None, arch, repo_name=repo_name)
+
+    @staticmethod
+    def default_arches(release):
+        return ['x86_64', 'aarch64', 'ppc64le', 's390x']
+
+    @staticmethod
+    def default_repo_names(arch, release):
+        return ['BaseOS', 'AppStream', 'CRB']
+
+    def get_base_url(self):
+        return self.FEDORA_BASE_URL_TEMPLATE.format(repo_name=self.repo_name,arch=self.arch)
+
+    def get_platform_id(self):
+        return 'eln'
+
+    def get_snapshot_id(self):
+        return f'eln-{self.arch}-{self.repo_name.lower()}'
+
+
 def get_parser():
     """
     Create argument parser
@@ -385,6 +416,10 @@ def get_parser():
         help='Stream of the release'
     )
 
+    eln_parser = subparsers.add_parser('eln', help='Generate Fedora ELN repository files')
+    eln_parser.set_defaults(generator=ELNRepoConfigGenerator)
+
+
     return parser
 
 # pylint: disable=too-many-branches
@@ -419,10 +454,14 @@ def main():
 
     logger.debug(args)
 
+    release = None
+    if "release" in args:
+        release = args.release
+
     arches = args.arch
     # if arch is not specified, generate the default arches
     if not arches:
-        arches = args.generator.default_arches(args.release)
+        arches = args.generator.default_arches(release)
         logger.info('Generating for all default arches: %s', arches)
 
     repo_names = args.repo_name
@@ -436,7 +475,7 @@ def main():
             arch_repo_names_map = {arch: [None] for arch in arches}
         else:
             arch_repo_names_map = {
-                arch: args.generator.default_repo_names(arch, args.release) for arch in arches
+                arch: args.generator.default_repo_names(arch, release) for arch in arches
             }
         logger.info('Generating for all default repo_names: %s', arch_repo_names_map)
 
@@ -448,6 +487,8 @@ def main():
             elif args.distro == 'fedora':
                 generator = args.generator(args.release, arch, repo_name, args.singleton, args.storage, args.base_url,
                                            args.snapshot_id_suffix, args.stream)
+            elif args.distro == 'eln':
+                generator = args.generator(arch, repo_name)
             else:
                 generator = args.generator(args.release, arch, repo_name, args.singleton, args.storage, args.base_url,
                                            args.snapshot_id_suffix)
