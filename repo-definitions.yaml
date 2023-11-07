@@ -255,3 +255,8 @@ fedora:
 # rawhide
 - release: '40'
   stream: rawhide
+
+# Fedora ELN
+eln:
+  - dummy:
+      # This needs to be an object, so let's just put a dummy one here.

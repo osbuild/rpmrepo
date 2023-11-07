@@ -94,8 +94,9 @@ def main():
             cmd.append(distro)
 
             # DISTRO SPECIFIC OPTIONS
-            release = repo['release']
-            cmd.extend(['--release', release])
+            if distro != 'eln':
+                release = repo['release']
+                cmd.extend(['--release', release])
 
             if distro == 'rhel':
                 released = repo.get('released', False)

@@ -1,0 +1,6 @@
+{
+        "base-url": "https://odcs.fedoraproject.org/composes/production/latest-Fedora-ELN/compose/AppStream/aarch64/os/",
+        "platform-id": "eln",
+        "snapshot-id": "eln-aarch64-appstream",
+        "storage": "public"
+}
