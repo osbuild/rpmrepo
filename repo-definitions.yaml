@@ -249,9 +249,15 @@ fedora:
   repo_name:
     - Everything
     - Modular # Modular was removed in F39, don't copy this over when setting up F39, https://fedoraproject.org/wiki/Changes/RetireModularity
-# branched, in-development release
 - release: '39'
-  stream: development
+  stream: releases
+  singleton: '20231109'
+  repo_name:
+    - Everything
+- release: '39'
+  stream: updates
+  repo_name:
+    - Everything
 # rawhide
 - release: '40'
   stream: rawhide
