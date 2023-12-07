@@ -104,6 +104,18 @@ rhel:
   base_url: https://packages.cloud.google.com/yum/repos/cloud-sdk-el8-x86_64/
   snapshot_id_suffix: google-cloud-sdk
   storage: public
+- release: '8.0'
+  arch:
+    - x86_64
+  base_url: http://nginx.org/packages/rhel/8/x86_64/
+  snapshot_id_suffix: nginx
+  storage: public
+- release: '8.0'
+  arch:
+    - aarch64
+  base_url: http://nginx.org/packages/rhel/8/aarch64/
+  snapshot_id_suffix: nginx
+  storage: public
 
 # Snapshots of RHEL-8.2 repos
 - release: '8.2'

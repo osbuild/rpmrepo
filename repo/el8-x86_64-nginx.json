@@ -1,0 +1,6 @@
+{
+        "base-url": "http://nginx.org/packages/rhel/8/x86_64/",
+        "platform-id": "el8",
+        "snapshot-id": "el8-x86_64-nginx",
+        "storage": "public"
+}
