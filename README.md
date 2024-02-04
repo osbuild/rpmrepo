@@ -73,7 +73,9 @@ The backend implementation of RPMrepo involves the following steps:
                        This name can be freely chosen. We usually name
                        snapshots as:
 
-                           <platform-id>-<arch>-<repo>[-<repo-version>].
+                       ```
+                       <platform-id>-<arch>-<repo>[-<repo-version>].
+                       ```
 
                        Note that the actual snapshots will get a suffix like
                        `-<date>` appended automatically. This field must not
@@ -214,7 +216,9 @@ The backend implementation of RPMrepo involves the following steps:
 If you just need a list of the available snapshots you can query the API like
 this:
 
-    `curl https://rpmrepo.osbuild.org/v2/enumerate | jq .`
+```
+curl https://rpmrepo.osbuild.org/v2/enumerate | jq .
+```
 
 Which will return a JSON list of the snapshots names.
 
