@@ -1,0 +1,6 @@
+{
+        "base-url": "https://composes.stream.centos.org/stream-10/production/latest-CentOS-Stream/compose/CRB/s390x/os/",
+        "platform-id": "el10",
+        "snapshot-id": "cs10-s390x-crb",
+        "storage": "public"
+}

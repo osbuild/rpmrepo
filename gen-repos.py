@@ -166,12 +166,14 @@ class CSRepoConfigGenerator(BaseRepoConfigGenerator):
     CS8_BASE_URL_TEMPLATE = "http://msync.centos.org/centos/{release_major}-stream/{repo_name}/{arch}/os/"
     CS9_BASE_URL_TEMPLATE = "https://composes.stream.centos.org/production/latest-CentOS-Stream/compose/" + \
                             "{repo_name}/{arch}/os/"
+    CS10_BASE_URL_TEMPLATE = "https://composes.stream.centos.org/stream-10/production/latest-CentOS-Stream/compose/" + \
+                            "{repo_name}/{arch}/os/"
 
     @staticmethod
     def default_arches(release):
         if release == '8':
             return ['x86_64', 'aarch64', 'ppc64le']
-        if release == '9':
+        if release == '9' or release == '10':
             return ['x86_64', 'aarch64', 'ppc64le', 's390x']
         raise ValueError(f'No default arches defined for CentOS Stream release: {release}')
 
@@ -179,7 +181,7 @@ class CSRepoConfigGenerator(BaseRepoConfigGenerator):
     def default_repo_names(arch, release):
         if release == '8':
             return ['BaseOS', 'AppStream', 'PowerTools']
-        if release == '9':
+        if release == '9' or release == '10':
             if arch == 'x86_64':
                 return ['BaseOS', 'AppStream', 'CRB', 'RT']
             return ['BaseOS', 'AppStream', 'CRB']
@@ -193,6 +195,8 @@ class CSRepoConfigGenerator(BaseRepoConfigGenerator):
             template = self.CS8_BASE_URL_TEMPLATE
         elif self.release == '9':
             template = self.CS9_BASE_URL_TEMPLATE
+        elif self.release == '10':
+            template = self.CS10_BASE_URL_TEMPLATE
         else:
             raise NotImplementedError(f'No BaseURL template defined for CentOS Stream {self.release}')
 

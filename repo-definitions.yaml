@@ -8,6 +8,7 @@
 cs:
 - release: '8'
 - release: '9'
+- release: '10'
 
 #####################
 # RHEL repositories #
