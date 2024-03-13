@@ -21,7 +21,7 @@ jobs:
         role-duration-seconds: 21600  # 6 hour session length
 
     - name: Clone repository
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v4
 
     - name: Count jobs
       id: count_jobs
@@ -97,7 +97,7 @@ jobs:
         echo "failed=$(jq '.jobSummaryList | length' failed.json)" >>$GITHUB_OUTPUT
 
     - name: Clone osbuild-composer repository
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v4
       with:
         repository: osbuild/osbuild-composer
         path: osbuild-composer
@@ -114,7 +114,7 @@ jobs:
       run: .github/scripts/snapshot_update_pr.sh
 
     - name: Clone osbuild repository
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v4
       with:
         repository: osbuild/osbuild
         path: osbuild
@@ -131,7 +131,7 @@ jobs:
       run: .github/scripts/snapshot_update_pr.sh
 
     - name: Clone cloud image val repository
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v4
       with:
         repository: osbuild/cloud-image-val
         path: cloud-image-val
@@ -148,7 +148,7 @@ jobs:
       run: .github/scripts/snapshot_update_pr.sh
 
     - name: Clone images repository
-      uses: actions/checkout@v2.3.4
+      uses: actions/checkout@v4
       with:
         repository: osbuild/images
         path: images
