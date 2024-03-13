@@ -244,17 +244,6 @@ rhel:
 
 fedora:
 # stable releases
-- release: '37'
-  stream: releases
-  singleton: '20221124'
-  repo_name:
-    - Everything
-    - Modular
-- release: '37'
-  stream: updates
-  repo_name:
-    - Everything
-    - Modular
 - release: '38'
   stream: releases
   singleton: '20230413'

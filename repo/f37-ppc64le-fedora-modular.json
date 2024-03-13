@@ -1,7 +1,0 @@
-{
-        "base-url": "https://dl.fedoraproject.org/pub/fedora-secondary/releases/37/Modular/ppc64le/os/",
-        "platform-id": "f37",
-        "singleton": "20221124",
-        "snapshot-id": "f37-ppc64le-fedora-modular",
-        "storage": "public"
-}
