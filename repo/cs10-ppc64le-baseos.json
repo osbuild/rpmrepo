@@ -1,0 +1,6 @@
+{
+        "base-url": "https://composes.stream.centos.org/stream-10/production/latest-CentOS-Stream/compose/BaseOS/ppc64le/os/",
+        "platform-id": "el10",
+        "snapshot-id": "cs10-ppc64le-baseos",
+        "storage": "public"
+}

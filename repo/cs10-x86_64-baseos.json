@@ -1,0 +1,6 @@
+{
+        "base-url": "https://composes.stream.centos.org/stream-10/production/latest-CentOS-Stream/compose/BaseOS/x86_64/os/",
+        "platform-id": "el10",
+        "snapshot-id": "cs10-x86_64-baseos",
+        "storage": "public"
+}
