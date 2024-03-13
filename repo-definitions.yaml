@@ -239,6 +239,9 @@ rhel:
 # Snapshots of RHEL-9.4 nightly repos
 - release: '9.4'
 
+# Snapshots of RHEL-9.5 nightly repos
+- release: '9.5'
+
 #######################
 # Fedora repositories #
 #######################
