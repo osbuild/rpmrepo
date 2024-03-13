@@ -1,0 +1,6 @@
+{
+        "base-url": "http://download.eng.bos.redhat.com/rhel-10/nightly/RHEL-10-Public-Beta/latest-RHEL-10.0/compose/SAPHANA/x86_64/os/",
+        "platform-id": "el10",
+        "snapshot-id": "el10-x86_64-saphana-n10.0",
+        "storage": "rhvpn"
+}
