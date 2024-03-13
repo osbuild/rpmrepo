@@ -23,7 +23,7 @@ class BaseRepoConfigGenerator(abc.ABC):
 
     # pylint: disable=too-many-arguments
     def __init__(self, release, arch, repo_name=None, singleton=None, storage=None, base_url=None,
-                 snapshot_id_suffix=None):
+                 base_url_template=None, snapshot_id_suffix=None):
         """
         :param release: The release to generate the repository file for (e.g. 8.3)
         :param arch: The architecture to generate the repository file for (e.g. x86_64)
@@ -40,6 +40,7 @@ class BaseRepoConfigGenerator(abc.ABC):
         self.singleton = singleton
         self.storage = storage
         self.base_url = base_url
+        self.base_url_template = base_url_template
         self.snapshot_id_suffix = snapshot_id_suffix
 
     @staticmethod
@@ -108,8 +109,8 @@ class RHELRepoConfigGenerator(BaseRepoConfigGenerator):
 
     # pylint: disable=too-many-arguments
     def __init__(self, release, arch, repo_name=None, singleton=None, storage=None, base_url=None,
-                 snapshot_id_suffix=None, released=False):
-        super().__init__(release, arch, repo_name, singleton, storage, base_url, snapshot_id_suffix)
+                 base_url_template=None, snapshot_id_suffix=None, released=False):
+        super().__init__(release, arch, repo_name, singleton, storage, base_url, base_url_template, snapshot_id_suffix)
         self.released = released
 
     @staticmethod
@@ -130,7 +131,12 @@ class RHELRepoConfigGenerator(BaseRepoConfigGenerator):
 
         release_major, release_minor = self.release.split('.')
         stream = 'rel-eng' if self.released else 'nightly'
-        return self.BASE_URL_TEMPLATE.format(
+
+        template = self.BASE_URL_TEMPLATE
+        if self.base_url_template is not None:
+            template = self.base_url_template
+
+        return template.format(
             release_major=release_major,
             release_minor=release_minor,
             stream=stream,
@@ -191,7 +197,9 @@ class CSRepoConfigGenerator(BaseRepoConfigGenerator):
         if self.base_url is not None:
             return self.base_url
 
-        if self.release == '8':
+        if self.base_url_template is not None:
+            template = self.base_url_template
+        elif self.release == '8':
             template = self.CS8_BASE_URL_TEMPLATE
         elif self.release == '9':
             template = self.CS9_BASE_URL_TEMPLATE
@@ -230,8 +238,8 @@ class FedoraRepoConfigGenerator(BaseRepoConfigGenerator):
 
     # pylint: disable=too-many-arguments
     def __init__(self, release, arch, repo_name=None, singleton=None, storage=None, base_url=None,
-                 snapshot_id_suffix=None, stream='releases'):
-        super().__init__(release, arch, repo_name, singleton, storage, base_url, snapshot_id_suffix)
+                 base_url_template=None, snapshot_id_suffix=None, stream='releases'):
+        super().__init__(release, arch, repo_name, singleton, storage, base_url, base_url_template, snapshot_id_suffix)
         self.stream = stream
         if self.stream not in self.RELEASE_STREAM:
             raise ValueError(f'Invalid release status: {self.stream}')
@@ -256,7 +264,9 @@ class FedoraRepoConfigGenerator(BaseRepoConfigGenerator):
             stream_release = self.release
 
         template = self.FEDORA_BASE_URL_TEMPLATE
-        if self.arch in ['ppc64le', 's390x']:
+        if self.base_url_template is not None:
+            template = self.base_url_template
+        elif self.arch in ['ppc64le', 's390x']:
             template = self.FEDORA_SECONDARY_BASE_URL_TEMPLATE
 
         url = template.format(
@@ -356,6 +366,13 @@ def get_parser():
         help='Literal URL to use for the repository base URL'
     )
     parser.add_argument(
+        '--base-url-template',
+        action='store',
+        default=None,
+        metavar='TMPL',
+        help='URL template to use for the repository base URL'
+    )
+    parser.add_argument(
         '--snapshot-id-suffix',
         action='store',
         default=None,
@@ -450,6 +467,8 @@ def main():
         parser.error('Providing --repo-name when both --base-url and --snapshot-id-suffix are provided has no effect')
     # Using default architectures does not make sense when base_url is provided, because the URL would be the same
     # for all architectures.
+    if args.base_url is not None and args.base_url_template is not None:
+        parser.error('Only one of --base-url and --base-url-template can be provided')
     if args.base_url is not None and not args.arch:
         parser.error('--arch must be provided when --base-url is provided')
     # Fedora and CentOS Stream use only major version number in release
@@ -487,15 +506,15 @@ def main():
         for repo_name in repo_names:
             if args.distro == 'rhel':
                 generator = args.generator(args.release, arch, repo_name, args.singleton, args.storage, args.base_url,
-                                           args.snapshot_id_suffix, args.released)
+                                           args.base_url_template, args.snapshot_id_suffix, args.released)
             elif args.distro == 'fedora':
                 generator = args.generator(args.release, arch, repo_name, args.singleton, args.storage, args.base_url,
-                                           args.snapshot_id_suffix, args.stream)
+                                           args.base_url_template, args.snapshot_id_suffix, args.stream)
             elif args.distro == 'eln':
                 generator = args.generator(arch, repo_name)
             else:
                 generator = args.generator(args.release, arch, repo_name, args.singleton, args.storage, args.base_url,
-                                           args.snapshot_id_suffix)
+                                           args.base_url_template, args.snapshot_id_suffix)
             generator.generate(args.target_dir)
 
 

@@ -77,6 +77,10 @@ def main():
             if base_url:
                 cmd.extend(['--base-url', base_url])
 
+            base_url_template = repo.get('base_url_template')
+            if base_url_template:
+                cmd.extend(['--base-url-template', base_url_template])
+
             snapshot_id_suffix = repo.get('snapshot_id_suffix')
             if snapshot_id_suffix:
                 cmd.extend(['--snapshot-id-suffix', snapshot_id_suffix])

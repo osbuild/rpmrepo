@@ -242,6 +242,10 @@ rhel:
 # Snapshots of RHEL-9.5 nightly repos
 - release: '9.5'
 
+# RHEL-10
+- release: '10.0'
+  base_url_template: "http://download.eng.bos.redhat.com/rhel-{release_major}/{stream}/RHEL-10-Public-Beta/latest-RHEL-{release_major}.{release_minor}/compose/{repo_name}/{arch}/os/"
+
 #######################
 # Fedora repositories #
 #######################
