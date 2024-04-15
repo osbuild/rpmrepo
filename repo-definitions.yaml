@@ -48,6 +48,11 @@ rhel:
     - x86_64
   base_url: http://download.eng.brq.redhat.com/rel-eng/repos/eng-rhel-7/x86_64/
   snapshot_id_suffix: eng-rhel
+- release: '7.9'
+  arch:
+    - x86_64
+  base_url: http://download.lab.bos.redhat.com/rhel-7/devel/candidate-trees/RHEL-7/latest-RHEL-7.9/compose/Server/x86_64/os/
+  snapshot_id_suffix: server-updates-7.9
 # Snapshots of RHEL-7.9 repos
 - release: '7.9'
   arch:
