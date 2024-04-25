@@ -32,7 +32,8 @@ repository, in particular the
 [rpmrepo.tf](https://github.com/osbuild/image-builder-terraform/blob/main/rpmrepo.tf)
 configuration.
 
-For user documentation on RPMrepo, see: <https://osbuild.org/rpmrepo/>
+For user documentation on RPMrepo, see:
+<https://osbuild.org/docs/developer-guide/projects/rpmrepo/>
 
 The backend implementation of RPMrepo involves the following steps:
 
