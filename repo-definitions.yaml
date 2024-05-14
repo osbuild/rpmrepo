@@ -277,9 +277,16 @@ fedora:
   stream: updates
   repo_name:
     - Everything
-# branched, in-development release
 - release: '40'
-  stream: development
+  stream: releases
+  singleton: '20240514'
+  repo_name:
+    - Everything
+- release: '40'
+  stream: updates
+  repo_name:
+    - Everything
+# branched, in-development release
 # rawhide
 - release: '41'
   stream: rawhide
