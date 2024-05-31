@@ -96,6 +96,11 @@ rhel:
 - release: '8.0'
   arch:
     - x86_64
+  base_url: https://download.devel.redhat.com/devel/stratosphere-rhui-sync/rhui-microsoft-azure-rhel8-base-sap-ha/
+  snapshot_id_suffix: base-sap-rhui-azure
+- release: '8.0'
+  arch:
+    - x86_64
   base_url: http://download.eng.bos.redhat.com/released/jboss/eap7/latest-released/JBEAP-7-RHEL-8/Server/x86_64/os/
   snapshot_id_suffix: jbeap7
 - release: '8.0'
