@@ -227,6 +227,50 @@ def _run_enumerate(arguments):
         ),
     )
 
+    try:
+        obj = s3c.get_object(Bucket="rpmrepo-storage", Key="data/meta/enumerate_cache.json")
+        return _success(json.loads(obj['Body'].read()))
+    except botocore.exceptions.ClientError:
+        return _error(500)
+
+
+def _run_enumerate_cache(arguments)
+    """Build the cache for the `enumerate/*` command
+
+    This allows the `enumerate` command to run a lot more quickly.
+    """
+
+    results = _enumerate_data(arguments)
+
+    # Expliticly create an anonymous client. We do not want to leak resources,
+    # none are needed for this query.
+    s3c = boto3.client(
+        "s3",
+        config=botocore.client.Config(
+            signature_version=botocore.UNSIGNED
+        ),
+    )
+
+    try:
+        s3c.put_object(Bucket="rpmrepo-storage", Key="data/meta/enumerate_cache.json", Body=json.dumps(results))
+    except botocore.exceptions.ClientError:
+        return _error(500)
+    return _success(json.dumps(results))
+
+
+def _enumerate_data(arguments):
+    """Compiles the data needed for the `numerate` commands
+    """
+
+    # Expliticly create an anonymous client. We do not want to leak resources,
+    # none are needed for this query.
+    s3c = boto3.client(
+        "s3",
+        config=botocore.client.Config(
+            signature_version=botocore.UNSIGNED
+        ),
+    )
+
     prefix = "data/thread/"
     if "thread" in arguments:
         prefix = prefix + arguments["thread"] + "/"
@@ -248,10 +292,8 @@ def _run_enumerate(arguments):
             key = entry.get("Key").rsplit("/", 1)[1]
             if len(key) > 0:
                 results.append(key)
-
     results.sort()
-
-    return _success(json.dumps(results))
+    return results
 
 
 def _run_mirror(arguments):
@@ -327,6 +369,8 @@ def lambda_handler(event, _context):
 
     if "enumerate" in request:
         return _run_enumerate(request["enumerate"])
+    elif "enumerate_cache" in request:
+        return _run_enumerate_cache(request["enumerate"])
     elif "mirror" in request:
         return _run_mirror(request["mirror"])
     elif "redirect" in request:
