@@ -12,7 +12,7 @@ import os
 import sys
 import uuid
 
-from . import index, pull, push
+from . import index, pull, push, enumerate_cache
 
 
 class CliIndex:
@@ -76,6 +76,19 @@ class CliPush:
 
         return 0
 
+class CliEnumerateCache:
+    """EnumerateCache command"""
+
+    def __init__(self, ctx):
+        self._ctx = ctx
+
+    def run(self):
+        """Run EnumerateCache command"""
+
+        with enumerate_cache.EnumerateCache() as cmd:
+            cmd.build()
+
+        return 0
 
 class Cli(contextlib.AbstractContextManager):
     """RPMrepo Command Line Interface"""
@@ -216,6 +229,8 @@ class Cli(contextlib.AbstractContextManager):
             ret = CliPull(self).run()
         elif self.args.cmd == "push":
             ret = CliPush(self).run()
+        elif self.args.cmd == "enumerate-cache":
+            ret = CliEnumerateCache(self).run()
         else:
             raise RuntimeError("Command mismatch")
 
