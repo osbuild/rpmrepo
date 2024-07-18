@@ -31,7 +31,7 @@ jobs:
       id: generate_suffix
       run: echo "suffix=$(date '+%Y%m%d')" >>$GITHUB_OUTPUT
 
-    - name: Submit array job
+    - name: Submit snapshot array job
       id: submit_job
       run: |
         echo size ${{ steps.count_jobs.outputs.size }} sha ${GITHUB_SHA}
@@ -47,7 +47,7 @@ jobs:
         echo "job_id=$(jq -r .jobId out.json)" >>$GITHUB_OUTPUT
         echo "job_name=$(jq -r .jobName out.json)" >>$GITHUB_OUTPUT
 
-    - name: Wait for jobs to start
+    - name: Wait for snapshot jobs to start
       id: wait_for_jobs_start
       run: |
         while true; do
@@ -63,7 +63,7 @@ jobs:
           sleep 30s
         done
 
-    - name: Wait for jobs to finish
+    - name: Wait for snapshot jobs to finish
       id: wait_for_jobs
       run: |
         while true; do
@@ -96,6 +96,37 @@ jobs:
         echo "succeeded=$SUCCEEDED" >>$GITHUB_OUTPUT
         echo "failed=$(jq '.jobSummaryList | length' failed.json)" >>$GITHUB_OUTPUT
 
+    - name: Submit enumerate-cache job
+      id: submit_cache_job
+      run: |
+        aws batch submit-job \
+          --job-name "enumerate-cache-runner" \
+          --job-definition "rpmrepo-batch-enumerate-cache-staging" \
+          --job-queue "rpmrepo-batch-staging" \
+          --timeout "attemptDurationSeconds=600"
+          > out.json
+        echo "enumerate_cache_job_id=$(jq -r .jobId out.json)" >>$GITHUB_OUTPUT
+        echo "enumerate_cache_job_name=$(jq -r .jobName out.json)" >>$GITHUB_OUTPUT
+
+    - name: Wait for enumerate cache job to finish
+      id: wait_for_cache_job
+      run: |
+        while true; do
+          STATUS=$(aws batch describe-jobs \
+            --jobs ${{ steps.submit_cache_job.outputs.enumerate_cache_job_id}} \
+            | jq -r .jobs[0].status)
+          if [ $STATUS = "FAILED" ]; then
+            echo "enumerate_cache_succeeded=false" >>$GITHUB_OUTPUT
+            break
+          fi
+          if [ $STATUS = "SUCCEEDED" ]; then
+            echo "enumerate_cache_succeeded=true" >>$GITHUB_OUTPUT
+            break
+          fi
+          echo "Waiting on cache job (status: $STATUS)"
+          sleep 10s
+        done
+
     - name: Clone osbuild-composer repository
       uses: actions/checkout@v4
       with:
@@ -110,6 +141,7 @@ jobs:
         JOBS_SUCCEEDED: ${{ steps.wait_for_jobs-outputs.succeeded }}
         JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
         WORKFLOW_RUN: ${{ github.run_id }}
+        ENUMERATE_CACHE_SUCCEEDED: ${{steps.wait_for_cache_job.outputs.enumerate_cache_succeeded}}
         REPO: "osbuild-composer"
       run: .github/scripts/snapshot_update_pr.sh
 
@@ -127,6 +159,7 @@ jobs:
         JOBS_SUCCEEDED: ${{ steps.wait_for_jobs-outputs.succeeded }}
         JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
         WORKFLOW_RUN: ${{ github.run_id }}
+        ENUMERATE_CACHE_SUCCEEDED: ${{steps.wait_for_cache_job.outputs.enumerate_cache_succeeded}}
         REPO: "osbuild"
       run: .github/scripts/snapshot_update_pr.sh
 
@@ -144,6 +177,7 @@ jobs:
         JOBS_SUCCEEDED: ${{ steps.wait_for_jobs-outputs.succeeded }}
         JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
         WORKFLOW_RUN: ${{ github.run_id }}
+        ENUMERATE_CACHE_SUCCEEDED: ${{steps.wait_for_cache_job.outputs.enumerate_cache_succeeded}}
         REPO: "cloud-image-val"
       run: .github/scripts/snapshot_update_pr.sh
 
@@ -161,5 +195,6 @@ jobs:
         JOBS_SUCCEEDED: ${{ steps.wait_for_jobs-outputs.succeeded }}
         JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
         WORKFLOW_RUN: ${{ github.run_id }}
+        ENUMERATE_CACHE_SUCCEEDED: ${{steps.wait_for_cache_job.outputs.enumerate_cache_succeeded}}
         REPO: "images"
       run: .github/scripts/snapshot_update_pr.sh
