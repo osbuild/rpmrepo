@@ -183,6 +183,16 @@ class Cli(contextlib.AbstractContextManager):
             type=str,
         )
 
+        cmd_push = cmd.add_parser(
+            "enumerate-cache",
+            add_help=True,
+            allow_abbrev=False,
+            argument_default=None,
+            description="Build the cache for enumerate",
+            help="Build the cache for enumerate",
+            prog=f"{self._parser.prog} enumerate-cache",
+        )
+
         return self._parser.parse_args(self._argv[1:])
 
     def _verify_args(self):
