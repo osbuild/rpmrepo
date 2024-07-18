@@ -138,7 +138,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.SCHUTZBOT_GH_TOKEN }}
         SUFFIX: ${{ steps.generate_suffix.outputs.suffix }}
-        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs-outputs.succeeded }}
+        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs.outputs.succeeded }}
         JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
         WORKFLOW_RUN: ${{ github.run_id }}
         ENUMERATE_CACHE_SUCCEEDED: ${{steps.wait_for_cache_job.outputs.enumerate_cache_succeeded}}
@@ -156,7 +156,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.SCHUTZBOT_GH_TOKEN }}
         SUFFIX: ${{ steps.generate_suffix.outputs.suffix }}
-        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs-outputs.succeeded }}
+        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs.outputs.succeeded }}
         JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
         WORKFLOW_RUN: ${{ github.run_id }}
         ENUMERATE_CACHE_SUCCEEDED: ${{steps.wait_for_cache_job.outputs.enumerate_cache_succeeded}}
@@ -174,7 +174,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.SCHUTZBOT_GH_TOKEN }}
         SUFFIX: ${{ steps.generate_suffix.outputs.suffix }}
-        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs-outputs.succeeded }}
+        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs.outputs.succeeded }}
         JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
         WORKFLOW_RUN: ${{ github.run_id }}
         ENUMERATE_CACHE_SUCCEEDED: ${{steps.wait_for_cache_job.outputs.enumerate_cache_succeeded}}
@@ -192,7 +192,7 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.SCHUTZBOT_GH_TOKEN }}
         SUFFIX: ${{ steps.generate_suffix.outputs.suffix }}
-        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs-outputs.succeeded }}
+        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs.outputs.succeeded }}
         JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
         WORKFLOW_RUN: ${{ github.run_id }}
         ENUMERATE_CACHE_SUCCEEDED: ${{steps.wait_for_cache_job.outputs.enumerate_cache_succeeded}}
