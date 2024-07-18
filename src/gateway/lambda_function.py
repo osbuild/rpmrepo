@@ -227,6 +227,14 @@ def _run_enumerate(arguments):
         ),
     )
 
+    # Serve the data from the enumerate cache if present
+    try:
+        obj = s3c.get_object(Bucket="rpmrepo-storage", Key="data/thread/meta/cache.json")
+        return _success(json.loads(obj['Body'].read()))
+    except botocore.exceptions.ClientError as e:
+        if not e.response['Error']['Code'] == "NoSuchKey":
+            return _error(500)
+
     prefix = "data/thread/"
     if "thread" in arguments:
         prefix = prefix + arguments["thread"] + "/"
