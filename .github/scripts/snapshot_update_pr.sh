@@ -10,7 +10,10 @@ pushd "$REPO" || exit 2
 
 if [ -e ./tools/check-snapshots ]; then
     echo "Checking snapshots..."
-    ./tools/check-snapshots --errors-only . || exit 1
+    CHECK_SNAPSHOT_SUCCEEDED=false
+    if ./tools/check-snapshots --errors-only .; then
+        CHECK_SNAPSHOT_SUCCEEDED=true
+    fi
 fi
 
 # Open PR with updated Schutzfile
@@ -27,8 +30,14 @@ git commit -m "schutzfile: Update snapshots to ${SUFFIX}"
 git push https://"$GITHUB_TOKEN"@github.com/schutzbot/"$REPO".git
 
 cat <<EOF > "body"
+Results of the snapshot jobs:
 Job(s) succeeded: $JOBS_SUCCEEDED
 Job(s) failed: $JOBS_FAILED
+
+If these are false, rebuild the enumerate cache manually:
+Enumerate cache job succeeded: $ENUMERATE_CACHE_SUCCEEDED
+Check snapshot succeeded: $CHECK_SNAPSHOT_SUCCEEDED
+
 Workflow run: https://github.com/osbuild/rpmrepo/actions/runs/$WORKFLOW_RUN
 EOF
 
