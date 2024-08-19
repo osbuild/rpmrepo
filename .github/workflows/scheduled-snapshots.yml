@@ -103,8 +103,7 @@ jobs:
           --job-name "enumerate-cache-runner" \
           --job-definition "rpmrepo-batch-enumerate-cache-staging" \
           --job-queue "rpmrepo-batch-staging" \
-          --timeout "attemptDurationSeconds=600"
-          > out.json
+          --timeout "attemptDurationSeconds=600" > out.json
         echo "enumerate_cache_job_id=$(jq -r .jobId out.json)" >>$GITHUB_OUTPUT
         echo "enumerate_cache_job_name=$(jq -r .jobName out.json)" >>$GITHUB_OUTPUT
 
