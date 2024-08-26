@@ -243,12 +243,6 @@ rhel:
   snapshot_id_suffix: google-cloud-sdk
   storage: public
 
-# Snapshots of RHEL-9.3 nightly repos
-- release: '9.3'
-
-# Snapshots of RHEL-9.4 nightly repos
-- release: '9.4'
-
 # Snapshots of RHEL-9.5 nightly repos
 - release: '9.5'
 
