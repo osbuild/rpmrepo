@@ -1,5 +1,5 @@
 {
-        "base-url": "http://download.eng.bos.redhat.com/rhel-10/nightly/RHEL-10/latest-RHEL-10.0/compose/CRB/aarch64/os/",
+        "base-url": "http://download.devel.redhat.com/rhel-10/nightly/RHEL-10/latest-RHEL-10.0/compose/CRB/aarch64/os/",
         "platform-id": "el10",
         "snapshot-id": "el10-aarch64-crb-n10.0",
         "storage": "rhvpn"
