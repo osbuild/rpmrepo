@@ -104,7 +104,7 @@ class RHELRepoConfigGenerator(BaseRepoConfigGenerator):
 
     # RHEL repo snapshots are stored in the rhvpn storage by default
     DEFAULT_STORAGE = 'rhvpn'
-    BASE_URL_TEMPLATE = "http://download.eng.bos.redhat.com/rhel-{release_major}/{stream}/RHEL-{release_major}/" + \
+    BASE_URL_TEMPLATE = "http://download.devel.redhat.com/rhel-{release_major}/{stream}/RHEL-{release_major}/" + \
                         "latest-RHEL-{release_major}.{release_minor}/compose/{repo_name}/{arch}/os/"
 
     # pylint: disable=too-many-arguments

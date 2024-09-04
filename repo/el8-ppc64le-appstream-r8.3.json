@@ -1,5 +1,5 @@
 {
-        "base-url": "http://download.eng.bos.redhat.com/rhel-8/rel-eng/RHEL-8/latest-RHEL-8.3/compose/AppStream/ppc64le/os/",
+        "base-url": "http://download.devel.redhat.com/rhel-8/rel-eng/RHEL-8/latest-RHEL-8.3/compose/AppStream/ppc64le/os/",
         "platform-id": "el8",
         "singleton": "20230809",
         "snapshot-id": "el8-ppc64le-appstream-r8.3",
