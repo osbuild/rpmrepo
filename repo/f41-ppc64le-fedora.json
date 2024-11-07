@@ -1,0 +1,7 @@
+{
+        "base-url": "https://dl.fedoraproject.org/pub/fedora-secondary/releases/41/Everything/ppc64le/os/",
+        "platform-id": "f41",
+        "singleton": "20241107",
+        "snapshot-id": "f41-ppc64le-fedora",
+        "storage": "public"
+}
