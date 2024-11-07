@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/updates/41/Everything/x86_64/",
+        "platform-id": "f41",
+        "snapshot-id": "f41-x86_64-updates-released",
+        "storage": "public"
+}
