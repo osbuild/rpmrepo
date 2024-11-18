@@ -23,6 +23,9 @@ import urllib.parse
 import botocore
 import boto3
 
+_robots_txt = """User-agent: *
+Disallow: /
+"""
 
 _storage_urls = {
     "anon": "https://rpmci.s3.us-east-2.amazonaws.com/data/anon",
@@ -331,6 +334,8 @@ def lambda_handler(event, _context):
 
     request = _parse_proxy(stage, proxy)
     if request is None:
+        if proxy == "robots.txt":
+            return _success(_robots_txt)
         return _error(400)
 
     if "enumerate" in request:
@@ -649,6 +654,19 @@ def test_mirror():
     )
     assert r["statusCode"] == 301
     assert r["headers"]["Location"] == "https://rpmrepo-storage.s3.amazonaws.com/data/public/unused/sha256-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+
+
+def test_robots():
+    """Tests for robots.txt"""
+
+    r = lambda_handler(
+        {
+            "pathParameters": {"proxy": "robots.txt"},
+        },
+        None,
+    )
+    assert r["statusCode"] == 200
+    assert r["body"] == _robots_txt
 
 
 def test_psi():
