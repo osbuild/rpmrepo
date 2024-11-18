@@ -35,6 +35,8 @@ _storage_urls = {
     "rhvpn": "https://rpmrepo-storage.bucket.vpce-08d3201af28373567-o10c2v4q.s3.us-east-1.vpce.amazonaws.com/data/rhvpn",
 }
 
+_documentation_url = "https://osbuild.org/docs/developer-guide/projects/rpmrepo/"
+
 
 def _error(code=500):
     """Synthesize API Error Reply"""
@@ -71,6 +73,9 @@ def _parse_proxy(stage, proxy):
     # not allow empty elements, as all current commands require non-empty
     # arguments (this also means you cannot have trailing slashes for now,
     # but API-Gateway drops those silently, anyway).
+
+    if proxy is None:
+        return None
 
     elements = proxy.split("/")
     if len(elements) < 1:
@@ -336,6 +341,8 @@ def lambda_handler(event, _context):
     if request is None:
         if proxy == "robots.txt":
             return _success(_robots_txt)
+        if proxy is None or proxy in ["", "/"]:
+            return _redirect(_documentation_url)
         return _error(400)
 
     if "enumerate" in request:
@@ -691,3 +698,18 @@ def test_psi():
     )
     assert r["statusCode"] == 301
     assert r["headers"]["Location"] == "https://rhos-d.infra.prod.upshift.rdu2.redhat.com:13808/v1/AUTH_95e858620fb34bcc9162d9f52367a560/manifestdb/rpmrepo/rpm/a/Packages/c/d"
+
+
+def test_basics():
+    """Tests for the basic redirects"""
+    documentation_events = [{"pathParameters": {"proxy": "/"}},
+                            {"pathParameters": {"proxy": ""}},
+                            {}]
+
+    for event in documentation_events:
+        r = lambda_handler(event
+                           ,
+                           None,
+                           )
+        assert r["statusCode"] == 301
+        assert r["headers"]["Location"] == _documentation_url
