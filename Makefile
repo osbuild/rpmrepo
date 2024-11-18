@@ -87,6 +87,7 @@ help:
 	@echo
 	@echo "    help:               Print this usage information."
 	@echo "    snapshot-configs:   Regenerate all snapshot configs from definitions."
+	@echo "    test:               Run unit-tests."
 
 $(BUILDDIR)/:
 	$(BIN_MKDIR) -p "$@"
@@ -124,3 +125,7 @@ gateway-zip: $(BUILDDIR)/gateway/rpmrepo-gateway-main.zip
 snapshot-configs:
 	rm -f $(SRCDIR)/repo/*.json
 	./gen-all-repos.py --definitions $(SRCDIR)/repo-definitions.yaml --output $(SRCDIR)/repo/
+
+.PHONY: test
+test:
+	pytest src/gateway/lambda_function.py
