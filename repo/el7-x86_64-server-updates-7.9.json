@@ -1,5 +1,5 @@
 {
-        "base-url": "http://download.lab.bos.redhat.com/rhel-7/devel/candidate-trees/RHEL-7/latest-RHEL-7.9/compose/Server/x86_64/os/",
+        "base-url": "http://download.devel.redhat.com/rhel-7/devel/candidate-trees/RHEL-7/latest-RHEL-7.9/compose/Server/x86_64/os/",
         "platform-id": "el7",
         "snapshot-id": "el7-x86_64-server-updates-7.9",
         "storage": "rhvpn"
