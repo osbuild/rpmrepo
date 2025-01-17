@@ -1,6 +1,0 @@
-{
-        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/updates/39/Everything/x86_64/",
-        "platform-id": "f39",
-        "snapshot-id": "f39-x86_64-updates-released",
-        "storage": "public"
-}
