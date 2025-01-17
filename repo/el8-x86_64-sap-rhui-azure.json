@@ -1,5 +1,5 @@
 {
-        "base-url": "http://download.eng.bos.redhat.com/devel/stratosphere-rhui-sync/rhui-microsoft-azure-rhel8-sap-ha/",
+        "base-url": "http://download.devel.redhat.com/devel/stratosphere-rhui-sync/rhui-microsoft-azure-rhel8-sap-ha/",
         "platform-id": "el8",
         "snapshot-id": "el8-x86_64-sap-rhui-azure",
         "storage": "rhvpn"
