@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/development/42/Everything/x86_64/os/",
+        "platform-id": "f42",
+        "snapshot-id": "f42-x86_64-branched",
+        "storage": "public"
+}
