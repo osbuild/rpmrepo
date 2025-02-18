@@ -1,6 +1,6 @@
 {
         "base-url": "https://dl.fedoraproject.org/pub/fedora-secondary/development/rawhide/Everything/s390x/os/",
-        "platform-id": "f42",
-        "snapshot-id": "f42-s390x-rawhide",
+        "platform-id": "f43",
+        "snapshot-id": "f43-s390x-rawhide",
         "storage": "public"
 }
