@@ -141,20 +141,6 @@ rhel:
     - x86_64
   repo_name:
     - RT
-# Snapshots of RHEL-8.3 repos
-- release: '8.3'
-  released: true
-  singleton: '20230809'
-  repo_name:
-    - BaseOS
-    - AppStream
-- release: '8.3'
-  released: true
-  singleton: '20230809'
-  arch:
-    - x86_64
-  repo_name:
-    - RT
 # Snapshots of RHEL-8.4 repos
 - release: '8.4'
   released: true
@@ -172,22 +158,7 @@ rhel:
     - RT
     - SAP
     - SAPHANA
-# Snapshots of RHEL-8.5 repos
-- release: '8.5'
-  released: true
-  singleton: '20230809'
-  repo_name:
-    - BaseOS
-    - AppStream
-- release: '8.5'
-  released: true
-  singleton: '20230809'
-  arch:
-    - x86_64
-  repo_name:
-    - HighAvailability
-    - RT
-    - SAPHANA
+
 # Snapshots of RHEL-8.6 repos
 - release: '8.6'
   released: true
@@ -196,8 +167,7 @@ rhel:
     - x86_64
   repo_name:
     - SAPHANA
-# Snapshots of RHEL-8.9 nightly repos
-- release: '8.9'
+
 # Snapshots of RHEL-8.10 nightly repos
 - release: '8.10'
 
