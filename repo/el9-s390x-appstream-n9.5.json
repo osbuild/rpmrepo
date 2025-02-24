@@ -1,6 +1,0 @@
-{
-        "base-url": "http://download.devel.redhat.com/rhel-9/nightly/RHEL-9/latest-RHEL-9.5/compose/AppStream/s390x/os/",
-        "platform-id": "el9",
-        "snapshot-id": "el9-s390x-appstream-n9.5",
-        "storage": "rhvpn"
-}
