@@ -75,13 +75,13 @@ rhel:
 - release: '8.0'
   arch:
     - x86_64
-  base_url: http://download.devel.redhat.com/rel-eng/rhel-8/RHUI/latest-RHUI-Client-3-RHEL-8/compose/RHUI/x86_64/os/
-  snapshot_id_suffix: rhui-3
+  base_url: http://download.devel.redhat.com/rel-eng/rhel-8/RHUI/latest-RHUI-Client-4-RHEL-8/compose/RHUI/x86_64/os/
+  snapshot_id_suffix: rhui-4
 - release: '8.0'
   arch:
     - aarch64
-  base_url: http://download.devel.redhat.com/rel-eng/rhel-8/RHUI/latest-RHUI-Client-3-RHEL-8/compose/RHUI/aarch64/os/
-  snapshot_id_suffix: rhui-3
+  base_url: http://download.devel.redhat.com/rel-eng/rhel-8/RHUI/latest-RHUI-Client-4-RHEL-8/compose/RHUI/aarch64/os/
+  snapshot_id_suffix: rhui-4
 - release: '8.0'
   arch:
     - x86_64
