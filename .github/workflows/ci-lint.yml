@@ -30,4 +30,5 @@ jobs:
           --disable duplicate-code \
           src/ctl \
           src/gateway/*.py \
-          src/script/*.py
+          src/script/*.py \
+          .github/scripts/*.py
