@@ -1,10 +1,11 @@
 #!/bin/bash
 
-# This script is meant to be run as a part of a workflow 
+# This script is meant to be run as a part of a workflow
 # which sets the necessary environment variables
 
 # run a helper script that updates Schutzfile with new snapshots
-python3 .github/scripts/update_schutzfile.py --repo "$REPO" --suffix "$SUFFIX"
+UPDATE_SCHUTZFILE_OUTPUT=$(mktemp)
+python3 .github/scripts/update_schutzfile.py --repo "$REPO" --suffix "$SUFFIX" 2>&1 > $UPDATE_SCHUTZFILE_OUTPUT
 
 pushd "$REPO" || exit 2
 
@@ -39,6 +40,16 @@ Enumerate cache job succeeded: $ENUMERATE_CACHE_SUCCEEDED
 Check snapshot succeeded: $CHECK_SNAPSHOT_SUCCEEDED
 
 Workflow run: https://github.com/osbuild/rpmrepo/actions/runs/$WORKFLOW_RUN
+
+---
+
+<details>
+<summary>update_schutzfile.py output</summary>
+
+$(cat UPDATE_SCHUTZFILE_OUTPUT)
+
+</details>
+
 EOF
 
 gh pr create \
