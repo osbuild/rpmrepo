@@ -224,6 +224,15 @@ rhel:
 # Snapshots of RHEL-10.1 nightly repos
 - release: '10.1'
 
+# RHEL-10
+# Snapshots of RHEL-10 repos that do not change per minor release
+# The minor release in this case does not play a role
+- release: '10.0'
+  arch:
+    - x86_64
+  base_url: http://download.devel.redhat.com/devel/stratosphere-rhui-sync/rhui-microsoft-azure-rhel10/
+  snapshot_id_suffix: rhui-azure
+
 #######################
 # Fedora repositories #
 #######################
