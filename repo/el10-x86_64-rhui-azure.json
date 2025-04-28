@@ -1,0 +1,6 @@
+{
+        "base-url": "http://download.devel.redhat.com/devel/stratosphere-rhui-sync/rhui-microsoft-azure-rhel10/",
+        "platform-id": "el10",
+        "snapshot-id": "el10-x86_64-rhui-azure",
+        "storage": "rhvpn"
+}
