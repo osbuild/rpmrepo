@@ -1,6 +1,0 @@
-{
-        "base-url": "https://dl.fedoraproject.org/pub/fedora-secondary/updates/40/Everything/s390x/",
-        "platform-id": "f40",
-        "snapshot-id": "f40-s390x-updates-released",
-        "storage": "public"
-}

@@ -234,15 +234,6 @@ rhel:
 
 fedora:
 # stable releases
-- release: '40'
-  stream: releases
-  singleton: '20240514'
-  repo_name:
-    - Everything
-- release: '40'
-  stream: updates
-  repo_name:
-    - Everything
 - release: '41'
   stream: releases
   singleton: '20241107'
@@ -252,9 +243,17 @@ fedora:
   stream: updates
   repo_name:
     - Everything
-# branched, in-development release
 - release: '42'
-  stream: development
+  stream: releases
+  singleton: '20250512'
+  repo_name:
+    - Everything
+- release: '42'
+  stream: updates
+  repo_name:
+    - Everything
+# branched, in-development release
+
 # rawhide
 - release: '43'
   stream: rawhide

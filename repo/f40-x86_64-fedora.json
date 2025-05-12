@@ -1,7 +1,0 @@
-{
-        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/releases/40/Everything/x86_64/os/",
-        "platform-id": "f40",
-        "singleton": "20240514",
-        "snapshot-id": "f40-x86_64-fedora",
-        "storage": "public"
-}

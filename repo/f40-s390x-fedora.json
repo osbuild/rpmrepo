@@ -1,7 +1,0 @@
-{
-        "base-url": "https://dl.fedoraproject.org/pub/fedora-secondary/releases/40/Everything/s390x/os/",
-        "platform-id": "f40",
-        "singleton": "20240514",
-        "snapshot-id": "f40-s390x-fedora",
-        "storage": "public"
-}
