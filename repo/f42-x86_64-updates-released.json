@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/updates/42/Everything/x86_64/",
+        "platform-id": "f42",
+        "snapshot-id": "f42-x86_64-updates-released",
+        "storage": "public"
+}

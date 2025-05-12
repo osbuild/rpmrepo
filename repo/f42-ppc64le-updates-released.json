@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl.fedoraproject.org/pub/fedora-secondary/updates/42/Everything/ppc64le/",
+        "platform-id": "f42",
+        "snapshot-id": "f42-ppc64le-updates-released",
+        "storage": "public"
+}

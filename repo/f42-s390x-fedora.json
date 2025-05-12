@@ -1,0 +1,7 @@
+{
+        "base-url": "https://dl.fedoraproject.org/pub/fedora-secondary/releases/42/Everything/s390x/os/",
+        "platform-id": "f42",
+        "singleton": "20250512",
+        "snapshot-id": "f42-s390x-fedora",
+        "storage": "public"
+}

@@ -1,6 +1,0 @@
-{
-        "base-url": "https://dl.fedoraproject.org/pub/fedora-secondary/development/42/Everything/ppc64le/os/",
-        "platform-id": "f42",
-        "snapshot-id": "f42-ppc64le-branched",
-        "storage": "public"
-}
