@@ -72,7 +72,7 @@ class Pull(contextlib.AbstractContextManager):
 
     def _run_reposync(self):
         cmd = [
-            "dnf", "-v", "reposync",
+            "dnf", "reposync",
             "--config", self._path_dnfconf,
             "--download-metadata",
             "--download-path", self._path_repo,
