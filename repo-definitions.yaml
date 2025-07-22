@@ -225,6 +225,16 @@ rhel:
 - release: '10.0'
   arch:
     - x86_64
+  base_url: http://download.devel.redhat.com/rhel-10/rel-eng/RHUI/latest-RHUI-Client-4-RHEL-10/compose/RHUI/x86_64/os/
+  snapshot_id_suffix: rhui-4
+- release: '10.0'
+  arch:
+    - aarch64
+  base_url: http://download.devel.redhat.com/rhel-10/rel-eng/RHUI/latest-RHUI-Client-4-RHEL-10/compose/RHUI/aarch64/os/
+  snapshot_id_suffix: rhui-4
+- release: '10.0'
+  arch:
+    - x86_64
   base_url: http://download.devel.redhat.com/devel/stratosphere-rhui-sync/rhui-microsoft-azure-rhel10/
   snapshot_id_suffix: rhui-azure
 
