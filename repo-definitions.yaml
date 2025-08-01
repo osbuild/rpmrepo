@@ -262,10 +262,13 @@ fedora:
   stream: updates
   repo_name:
     - Everything
+
 # branched, in-development release
+- release: '43'
+  stream: development
 
 # rawhide
-- release: '43'
+- release: '44'
   stream: rawhide
 
 # Fedora ELN

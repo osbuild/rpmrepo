@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/development/43/Everything/aarch64/os/",
+        "platform-id": "f43",
+        "snapshot-id": "f43-aarch64-branched",
+        "storage": "public"
+}
