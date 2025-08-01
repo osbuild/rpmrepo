@@ -1,0 +1,6 @@
+{
+        "base-url": "http://download.devel.redhat.com/rhel-10/rel-eng/RHUI/latest-RHUI-Client-4-RHEL-10/compose/RHUI/aarch64/os/",
+        "platform-id": "el10",
+        "snapshot-id": "el10-aarch64-rhui-4",
+        "storage": "rhvpn"
+}
