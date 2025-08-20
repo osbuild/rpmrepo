@@ -1,0 +1,6 @@
+{
+        "base-url": "https://rhsm-pulp.corp.redhat.com/content/eus/rhel8/8.4/x86_64/baseos/os/",
+        "platform-id": "el8",
+        "snapshot-id": "el8-x86_64-baseos-e8.4",
+        "storage": "rhvpn"
+}
