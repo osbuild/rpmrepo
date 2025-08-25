@@ -136,23 +136,28 @@ rhel:
     - x86_64
   repo_name:
     - RT
-# Snapshots of RHEL-8.4 repos
+
+# Snapshots of RHEL-8.4 eus repos
 - release: '8.4'
-  released: true
-  singleton: '20230809'
+  eus: true
   repo_name:
-    - BaseOS
-    - AppStream
+    - baseos
+    - appstream
 - release: '8.4'
-  released: true
-  singleton: '20230809'
+  eus: true
   arch:
     - x86_64
   repo_name:
-    - HighAvailability
-    - RT
-    - SAP
-    - SAPHANA
+    - highavailability
+    - sap
+    - sap-solutions
+# RT is missing from the internal 8.4 EUS pulp mirrors
+- release: '8.4'
+  arch:
+    - x86_64
+  singleton: '20250825'
+  base_url: http://download.devel.redhat.com/rhel-8/rel-eng/RHEL-8/RHEL-8.4.0-20220701.0/compose/RT/x86_64/os/
+  snapshot_id_suffix: rt-e8.4
 
 # Snapshots of RHEL-8.6 repos
 - release: '8.6'

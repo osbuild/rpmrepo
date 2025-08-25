@@ -1,0 +1,7 @@
+{
+        "base-url": "http://download.devel.redhat.com/rhel-8/rel-eng/RHEL-8/RHEL-8.4.0-20220701.0/compose/RT/x86_64/os/",
+        "platform-id": "el8",
+        "singleton": "20250825",
+        "snapshot-id": "el8-x86_64-rt-e8.4",
+        "storage": "rhvpn"
+}
