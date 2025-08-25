@@ -106,12 +106,15 @@ class RHELRepoConfigGenerator(BaseRepoConfigGenerator):
     DEFAULT_STORAGE = 'rhvpn'
     BASE_URL_TEMPLATE = "http://download.devel.redhat.com/rhel-{release_major}/{stream}/RHEL-{release_major}/" + \
                         "latest-RHEL-{release_major}.{release_minor}/compose/{repo_name}/{arch}/os/"
+    BASE_EUS_TEMPLATE = "https://rhsm-pulp.corp.redhat.com/content/eus/rhel{release_major}/" + \
+                        "{release_major}.{release_minor}/{arch}/{repo_name}/os/"
 
     # pylint: disable=too-many-arguments
     def __init__(self, release, arch, repo_name=None, singleton=None, storage=None, base_url=None,
-                 base_url_template=None, snapshot_id_suffix=None, released=False):
+                 base_url_template=None, snapshot_id_suffix=None, released=False, eus=False):
         super().__init__(release, arch, repo_name, singleton, storage, base_url, base_url_template, snapshot_id_suffix)
         self.released = released
+        self.eus = eus
 
     @staticmethod
     def default_arches(release):
@@ -132,7 +135,7 @@ class RHELRepoConfigGenerator(BaseRepoConfigGenerator):
         release_major, release_minor = self.release.split('.')
         stream = 'rel-eng' if self.released else 'nightly'
 
-        template = self.BASE_URL_TEMPLATE
+        template = self.BASE_EUS_TEMPLATE if self.eus else self.BASE_URL_TEMPLATE
         if self.base_url_template is not None:
             template = self.base_url_template
 
@@ -155,10 +158,10 @@ class RHELRepoConfigGenerator(BaseRepoConfigGenerator):
 
             # abbreviations used for some repo names
             repo_name_mapping = {
-                'HighAvailability': 'ha',
+                'highavailability': 'ha',
             }
-            repo_name_specifier = repo_name_mapping.get(self.repo_name, self.repo_name.lower())
-            stream_specifier = 'r' if self.released else 'n'
+            repo_name_specifier = repo_name_mapping.get(self.repo_name.lower(), self.repo_name.lower())
+            stream_specifier = 'e' if self.eus else 'r' if self.released else 'n'
             snapshot_id_suffix = f'{repo_name_specifier}-{stream_specifier}{release_major}.{release_minor}'
 
         return f'{self.get_platform_id()}-{self.arch}-{snapshot_id_suffix}'
@@ -414,6 +417,12 @@ def get_parser():
         default=False,
         help='Released or not'
     )
+    rhel_parser.add_argument(
+        '--eus',
+        action='store_true',
+        default=False,
+        help='EUS or not'
+    )
 
     cs_parser = subparsers.add_parser('cs', help='Generate CentOS Stream repository files')
     cs_parser.set_defaults(generator=CSRepoConfigGenerator)
@@ -506,7 +515,7 @@ def main():
         for repo_name in repo_names:
             if args.distro == 'rhel':
                 generator = args.generator(args.release, arch, repo_name, args.singleton, args.storage, args.base_url,
-                                           args.base_url_template, args.snapshot_id_suffix, args.released)
+                                           args.base_url_template, args.snapshot_id_suffix, args.released, args.eus)
             elif args.distro == 'fedora':
                 generator = args.generator(args.release, arch, repo_name, args.singleton, args.storage, args.base_url,
                                            args.base_url_template, args.snapshot_id_suffix, args.stream)
