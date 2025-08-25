@@ -28,7 +28,6 @@ Disallow: /
 """
 
 _storage_urls = {
-    "anon": "https://rpmci.s3.us-east-2.amazonaws.com/data/anon",
     "psi": "https://rhos-d.infra.prod.upshift.rdu2.redhat.com:13808/v1/AUTH_95e858620fb34bcc9162d9f52367a560/rpmci/data/anon",
     "psi-legacy": "https://rhos-d.infra.prod.upshift.rdu2.redhat.com:13808/v1/AUTH_95e858620fb34bcc9162d9f52367a560/manifestdb/rpmrepo",
     "public": "https://rpmrepo-storage.s3.amazonaws.com/data/public",
@@ -170,9 +169,7 @@ def _parse_proxy(stage, proxy):
 def _parse_storage(storage):
     """Parse the storage identifier"""
 
-    if storage == "anon":
-        return _storage_urls["anon"]
-    elif storage == "psi":
+    if storage == "psi":
         return _storage_urls["psi"]
     elif storage == "public":
         return _storage_urls["public"]
@@ -196,7 +193,7 @@ def _query_s3(storage, snapshot, path):
 
     # Legacy storage uses the old `rpmci` logic. Keep this as long as we have
     # snapshots in those storage locations.
-    if storage in ("anon", "psi"):
+    if storage == "psi":
         try:
             head = s3c.head_object(
                 Bucket="rpmci",
@@ -549,9 +546,6 @@ def test_parse_storage():
     r = _parse_storage("")
     assert r is None
 
-    r = _parse_storage("anon")
-    assert r == "https://rpmci.s3.us-east-2.amazonaws.com/data/anon"
-
     r = _parse_storage("psi")
     assert r == "https://rhos-d.infra.prod.upshift.rdu2.redhat.com:13808/v1/AUTH_95e858620fb34bcc9162d9f52367a560/rpmci/data/anon"
 
@@ -575,15 +569,6 @@ def test_query_s3():
     # This test makes use of the `test/empty` file that we explicitly store in
     # the S3 buckets for testing. This is an empty file with the sha256 of an
     # empty file as metadata.
-
-    r = _query_s3("anon", "test", "empty")
-    assert r == "sha256-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
-
-    r = _query_s3("anon", "test-invalid", "empty")
-    assert r is None
-
-    r = _query_s3("anon", "test", "empty-invalid")
-    assert r is None
 
     r = _query_s3("public", "test", "empty")
     assert r == "sha256-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
@@ -647,13 +632,6 @@ def test_mirror():
     # Furthermore, this test also makes use of the `test/empty` snapshot file
     # that we have in our S3 buckets explicitly for testing. See
     # `test_query_s3()` for details.
-
-    r = lambda_handler(
-        { "pathParameters": { "proxy": "mirror/anon/unused/test/empty" } },
-        None,
-    )
-    assert r["statusCode"] == 301
-    assert r["headers"]["Location"] == "https://rpmci.s3.us-east-2.amazonaws.com/data/anon/unused/sha256-e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
 
     r = lambda_handler(
         { "pathParameters": { "proxy": "mirror/public/unused/test/empty" } },
