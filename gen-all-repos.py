@@ -106,6 +106,9 @@ def main():
                 released = repo.get('released', False)
                 if released:
                     cmd.append('--released')
+                eus = repo.get('eus', False)
+                if eus:
+                    cmd.append('--eus')
 
             elif distro == 'fedora':
                 stream = repo.get('stream')
