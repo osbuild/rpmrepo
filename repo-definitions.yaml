@@ -215,6 +215,9 @@ rhel:
 # Snapshots of RHEL-9.7 nightly repos
 - release: '9.7'
 
+# Snapshots of RHEL-9.8 nightly repos
+- release: '9.8'
+
 # RHEL-10
 # Snapshots of RHEL-10 repos that do not change per minor release
 # The minor release in this case does not play a role
@@ -236,6 +239,9 @@ rhel:
 
 # Snapshots of RHEL-10.1 nightly repos
 - release: '10.1'
+
+# Snapshots of RHEL-10.2 nightly repos
+- release: '10.2'
 
 #######################
 # Fedora repositories #
