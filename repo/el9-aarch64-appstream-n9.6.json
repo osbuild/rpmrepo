@@ -1,6 +1,0 @@
-{
-        "base-url": "http://download.devel.redhat.com/rhel-9/nightly/RHEL-9/latest-RHEL-9.6/compose/AppStream/aarch64/os/",
-        "platform-id": "el9",
-        "snapshot-id": "el9-aarch64-appstream-n9.6",
-        "storage": "rhvpn"
-}
