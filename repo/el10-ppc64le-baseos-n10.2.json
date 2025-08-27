@@ -1,0 +1,6 @@
+{
+        "base-url": "http://download.devel.redhat.com/rhel-10/nightly/RHEL-10/latest-RHEL-10.2/compose/BaseOS/ppc64le/os/",
+        "platform-id": "el10",
+        "snapshot-id": "el10-ppc64le-baseos-n10.2",
+        "storage": "rhvpn"
+}
