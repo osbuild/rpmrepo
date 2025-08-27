@@ -212,17 +212,8 @@ rhel:
   snapshot_id_suffix: google-cloud-sdk
   storage: public
 
-# Snapshots of RHEL-9.6 nightly repos
-- release: '9.6'
-
-# Snapshots of RHEL-10.0 nightly repos
-- release: '10.0'
-
 # Snapshots of RHEL-9.7 nightly repos
 - release: '9.7'
-
-# Snapshots of RHEL-10.1 nightly repos
-- release: '10.1'
 
 # RHEL-10
 # Snapshots of RHEL-10 repos that do not change per minor release
@@ -242,6 +233,9 @@ rhel:
     - x86_64
   base_url: http://download.devel.redhat.com/devel/stratosphere-rhui-sync/rhui-microsoft-azure-rhel10/
   snapshot_id_suffix: rhui-azure
+
+# Snapshots of RHEL-10.1 nightly repos
+- release: '10.1'
 
 #######################
 # Fedora repositories #
