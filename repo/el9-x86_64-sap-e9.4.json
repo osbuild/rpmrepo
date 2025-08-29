@@ -1,0 +1,6 @@
+{
+        "base-url": "https://rhsm-pulp.corp.redhat.com/content/eus/rhel9/9.4/x86_64/sap/os/",
+        "platform-id": "el9",
+        "snapshot-id": "el9-x86_64-sap-e9.4",
+        "storage": "rhvpn"
+}

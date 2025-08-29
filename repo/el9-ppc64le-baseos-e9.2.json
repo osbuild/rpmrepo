@@ -1,0 +1,6 @@
+{
+        "base-url": "https://rhsm-pulp.corp.redhat.com/content/eus/rhel9/9.2/ppc64le/baseos/os/",
+        "platform-id": "el9",
+        "snapshot-id": "el9-ppc64le-baseos-e9.2",
+        "storage": "rhvpn"
+}

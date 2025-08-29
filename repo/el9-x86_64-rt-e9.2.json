@@ -1,0 +1,7 @@
+{
+        "base-url": "http://download.devel.redhat.com/rhel-9/rel-eng/RHEL-9/RHEL-9.2.0-20230414.0/compose/RT/x96_64/os/",
+        "platform-id": "el9",
+        "singleton": "20250829",
+        "snapshot-id": "el9-x86_64-rt-e9.2",
+        "storage": "rhvpn"
+}
