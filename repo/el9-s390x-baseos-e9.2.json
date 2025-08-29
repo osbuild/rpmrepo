@@ -1,0 +1,6 @@
+{
+        "base-url": "https://rhsm-pulp.corp.redhat.com/content/eus/rhel9/9.2/s390x/baseos/os/",
+        "platform-id": "el9",
+        "snapshot-id": "el9-s390x-baseos-e9.2",
+        "storage": "rhvpn"
+}

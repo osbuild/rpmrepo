@@ -1,0 +1,6 @@
+{
+        "base-url": "https://rhsm-pulp.corp.redhat.com/content/eus/rhel9/9.0/x86_64/appstream/os/",
+        "platform-id": "el9",
+        "snapshot-id": "el9-x86_64-appstream-e9.0",
+        "storage": "rhvpn"
+}
