@@ -214,7 +214,7 @@ rhel:
 
 # Snapshots of RHEL-9.0 eus repos
 - release: '9.0'
-  eus: true
+  e4s: true
   repo_name:
     - baseos
     - appstream
