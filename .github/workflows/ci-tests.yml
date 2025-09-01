@@ -28,3 +28,12 @@ jobs:
 
     - name: "Run gateway tests"
       run: python3 -m pytest src/gateway/*.py
+
+    - name: "Verify that snapshot configurations have been generated"
+      run: |
+        make snapshot-configs
+        if [ -n "$(git status --porcelain)" ]; then
+          echo
+          echo "Please run make snapshot-configs"
+          exit "1"
+        fi
