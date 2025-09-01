@@ -71,10 +71,8 @@ class Pull(contextlib.AbstractContextManager):
         self._exitstack = None
 
     def _run_reposync(self):
-        subprocess.run(["dnf", "install", "-y", "dnf4"], stdout=subprocess.PIPE, check=True)
-
         cmd = [
-            "dnf4", "reposync",
+            "dnf", "reposync",
             "--config", self._path_dnfconf,
             "--download-metadata",
             "--download-path", self._path_repo,
