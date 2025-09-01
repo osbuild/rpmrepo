@@ -302,6 +302,18 @@ rhel:
     - x86_64
   base_url: http://download.devel.redhat.com/devel/stratosphere-rhui-sync/rhui-microsoft-azure-rhel10/
   snapshot_id_suffix: rhui-azure
+- release: '10.0'
+  arch:
+    - x86_64
+  base_url: https://packages.cloud.google.com/yum/repos/google-compute-engine-el10-x86-64-stable/
+  snapshot_id_suffix: google-compute-engine
+  storage: public
+- release: '10.0'
+  arch:
+    - x86_64
+  base_url: https://packages.cloud.google.com/yum/repos/cloud-sdk-el10-x86_64/
+  snapshot_id_suffix: google-cloud-sdk
+  storage: public
 
 # Snapshots of RHEL-10.1 nightly repos
 - release: '10.1'
