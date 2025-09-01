@@ -230,8 +230,8 @@ rhel:
 - release: '9.0'
   arch:
     - x86_64
-  singleton: '20250829'
-  base_url: http://download.devel.redhat.com/rhel-9/rel-eng/RHEL-9/RHEL-9.0.0-20230112.0/compose/RT/x96_64/os/
+  singleton: '20250831'
+  base_url: http://download.devel.redhat.com/rhel-9/rel-eng/RHEL-9/RHEL-9.0.0-20230112.0/compose/RT/x86_64/os/
   snapshot_id_suffix: rt-e9.0
 
 # Snapshots of RHEL-9.2 eus repos
@@ -252,8 +252,8 @@ rhel:
 - release: '9.2'
   arch:
     - x86_64
-  singleton: '20250829'
-  base_url: http://download.devel.redhat.com/rhel-9/rel-eng/RHEL-9/RHEL-9.2.0-20230414.0/compose/RT/x96_64/os/
+  singleton: '20250831'
+  base_url: http://download.devel.redhat.com/rhel-9/rel-eng/RHEL-9/RHEL-9.2.0-20230414.17/compose/RT/x86_64/os/
   snapshot_id_suffix: rt-e9.2
 
 # Snapshots of RHEL-9.4 eus repos
@@ -274,8 +274,8 @@ rhel:
 - release: '9.4'
   arch:
     - x86_64
-  singleton: '20250829'
-  base_url: http://download.devel.redhat.com/rhel-9/rel-eng/RHEL-9/RHEL-9.4.0-20240419.0/compose/RT/x96_64/os/
+  singleton: '20250831'
+  base_url: http://download.devel.redhat.com/rhel-9/rel-eng/RHEL-9/RHEL-9.4.0-20240419.25/compose/RT/x86_64/os/
   snapshot_id_suffix: rt-e9.4
 
 # Snapshots of RHEL-9.7 nightly repos
