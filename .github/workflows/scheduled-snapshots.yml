@@ -42,7 +42,7 @@ jobs:
           --job-queue "rpmrepo-batch-staging" \
           --timeout "attemptDurationSeconds=86400" \
           --array-properties "size=${{ steps.count_jobs.outputs.size }}" \
-          --parameters "repoCommit=$GITHUB_SHA,repoBranch=main,repoSuffix=${{ steps.generate_suffix.outputs.suffix }},repoTarget=auto" \
+          --parameters "repoCommit=$GITHUB_SHA,repoBranch=dnf5,repoSuffix=${{ steps.generate_suffix.outputs.suffix }},repoTarget=auto" \
           > out.json
         echo "job_id=$(jq -r .jobId out.json)" >>$GITHUB_OUTPUT
         echo "job_name=$(jq -r .jobName out.json)" >>$GITHUB_OUTPUT
