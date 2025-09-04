@@ -1,6 +1,0 @@
-{
-        "base-url": "https://packages.cloud.google.com/yum/repos/cloud-sdk-el10-x86_64/",
-        "platform-id": "el10",
-        "snapshot-id": "el10-x86_64-google-cloud-sdk",
-        "storage": "public"
-}
