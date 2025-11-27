@@ -1,6 +1,0 @@
-{
-        "base-url": "http://download.devel.redhat.com/rhel-10/nightly/RHEL-10/latest-RHEL-10.1/compose/BaseOS/x86_64/os/",
-        "platform-id": "el10",
-        "snapshot-id": "el10-x86_64-baseos-n10.1",
-        "storage": "rhvpn"
-}
