@@ -297,9 +297,6 @@ rhel:
   snapshot_id_suffix: google-compute-engine
   storage: public
 
-# Snapshots of RHEL-10.1 nightly repos
-- release: '10.1'
-
 # Snapshots of RHEL-10.2 nightly repos
 - release: '10.2'
 
