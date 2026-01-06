@@ -108,6 +108,9 @@ def write_test_repositories(repo_folder, dry_run, suffix, singletons, live_snaps
     if os.path.exists(test_data_repositories_dir):
         repo_json_files = os.listdir(test_data_repositories_dir)
         for repo_file in repo_json_files:
+            if not repo_file.endswith(".json"):
+                print(f"{repo_file} not a JSON file: skipping")
+                continue
             with open(os.path.join(test_data_repositories_dir, repo_file), "r", encoding="utf-8") as file:
                 data = json.load(file)
 
