@@ -315,10 +315,15 @@ fedora:
   stream: updates
   repo_name:
     - Everything
-
-# branched, in-development release
 - release: '43'
-  stream: development
+  stream: releases
+  singleton: '20260106'
+  repo_name:
+    - Everything
+- release: '43'
+  stream: updates
+  repo_name:
+    - Everything
 
 # rawhide
 - release: '44'
