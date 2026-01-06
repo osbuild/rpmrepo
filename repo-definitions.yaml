@@ -306,15 +306,6 @@ rhel:
 
 fedora:
 # stable releases
-- release: '41'
-  stream: releases
-  singleton: '20241107'
-  repo_name:
-    - Everything
-- release: '41'
-  stream: updates
-  repo_name:
-    - Everything
 - release: '42'
   stream: releases
   singleton: '20250512'
