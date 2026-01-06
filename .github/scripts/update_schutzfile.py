@@ -1,12 +1,14 @@
 #!/usr/bin/python3
 
 """Required modules"""
+import argparse
 import json
 import os
 import re
-import argparse
 import urllib
+
 import requests
+
 
 def basename(url):
     """Get basename from the path of a url"""
@@ -106,9 +108,7 @@ def write_test_repositories(repo_folder, dry_run, suffix, singletons, live_snaps
     if os.path.exists(test_data_repositories_dir):
         repo_json_files = os.listdir(test_data_repositories_dir)
         for repo_file in repo_json_files:
-            with open(
-                    os.path.join(test_data_repositories_dir, repo_file), "r", encoding="utf-8"
-            ) as file:
+            with open(os.path.join(test_data_repositories_dir, repo_file), "r", encoding="utf-8") as file:
                 data = json.load(file)
 
             for arch in data.keys():
