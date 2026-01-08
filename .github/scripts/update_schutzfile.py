@@ -6,8 +6,10 @@ import json
 import os
 import re
 import urllib
+from io import StringIO
 
 import requests
+from ruamel.yaml import YAML
 
 
 def basename(url):
@@ -94,7 +96,7 @@ def write_schutzfile(repo_folder, dry_run, suffix, singletons, live_snapshots):
 def write_test_repositories(repo_folder, dry_run, suffix, singletons, live_snapshots):
     """
     Update test repositories, which have the following structure:
-    distro.json:
+    distro.json or distro.yaml:
     {
       "arch": [
         {
@@ -106,13 +108,26 @@ def write_test_repositories(repo_folder, dry_run, suffix, singletons, live_snaps
     test_data_repositories_dir = os.path.join(repo_folder, "test/data/repositories/")
     print(f"Updating {test_data_repositories_dir}")
     if os.path.exists(test_data_repositories_dir):
-        repo_json_files = os.listdir(test_data_repositories_dir)
-        for repo_file in repo_json_files:
-            if not repo_file.endswith(".json"):
-                print(f"{repo_file} not a JSON file: skipping")
+        repo_files = os.listdir(test_data_repositories_dir)
+        for repo_file in repo_files:
+            is_json = repo_file.endswith(".json")
+            is_yaml = repo_file.endswith(".yaml") or repo_file.endswith(".yml")
+            if not (is_json or is_yaml):
+                print(f"{repo_file} not a JSON or YAML file: skipping")
                 continue
-            with open(os.path.join(test_data_repositories_dir, repo_file), "r", encoding="utf-8") as file:
-                data = json.load(file)
+
+            file_path = os.path.join(test_data_repositories_dir, repo_file)
+            yaml_loader = None
+            if is_json:
+                with open(file_path, "r", encoding="utf-8") as file:
+                    data = json.load(file)
+            else:
+                # must be aligned with images:tools/reformat-repos
+                yaml_loader = YAML()
+                yaml_loader.width = 120
+                yaml_loader.indent(mapping=2, sequence=4, offset=2)
+                with open(file_path, "r", encoding="utf-8") as file:
+                    data = yaml_loader.load(file)
 
             for arch in data.keys():
                 # Always update all repositories belonging to a distro:arch together,
@@ -144,12 +159,19 @@ def write_test_repositories(repo_folder, dry_run, suffix, singletons, live_snaps
                     repo["baseurl"] = re.sub("[0-9]{8}", suffix, baseurl)
 
             if not dry_run:
-                with open(
-                    os.path.join(test_data_repositories_dir, repo_file), "w", encoding="utf-8"
-                ) as file:
-                    json.dump(data, file, indent=2)
+                if is_json:
+                    with open(file_path, "w", encoding="utf-8") as file:
+                        json.dump(data, file, indent=2)
+                else:
+                    with open(file_path, "w", encoding="utf-8") as file:
+                        yaml_loader.dump(data, file)
             else:
-                print(json.dumps(data, indent=2))
+                if is_json:
+                    print(json.dumps(data, indent=2))
+                else:
+                    output = StringIO()
+                    yaml_loader.dump(data, output)
+                    print(output.getvalue())
 
 
 def main(suffix, repo_folder, dry_run):
