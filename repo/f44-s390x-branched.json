@@ -1,0 +1,6 @@
+{
+        "base-url": "https://dl.fedoraproject.org/pub/fedora-secondary/development/44/Everything/s390x/os/",
+        "platform-id": "f44",
+        "snapshot-id": "f44-s390x-branched",
+        "storage": "public"
+}

@@ -325,8 +325,12 @@ fedora:
   repo_name:
     - Everything
 
-# rawhide
+# branched, in -development release
 - release: '44'
+  stream: development
+
+# rawhide
+- release: '45'
   stream: rawhide
 
 # Fedora ELN
