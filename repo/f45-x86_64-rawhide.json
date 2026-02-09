@@ -1,6 +1,6 @@
 {
         "base-url": "https://dl01.fedoraproject.org/pub/fedora/linux/development/rawhide/Everything/x86_64/os/",
-        "platform-id": "f44",
-        "snapshot-id": "f44-x86_64-rawhide",
+        "platform-id": "f45",
+        "snapshot-id": "f45-x86_64-rawhide",
         "storage": "public"
 }
