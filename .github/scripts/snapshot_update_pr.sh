@@ -17,6 +17,13 @@ if [ -e ./tools/check-snapshots ]; then
     fi
 fi
 
+# Update manifest checksums in osbuild/images.
+# Identify by checking for the script.
+if [ -e ./tools/gen-manifest-checksums.sh ]; then
+    echo "Updating manifest checksums"
+    ./tools/gen-manifest-checksums.sh
+fi
+
 # Open PR with updated Schutzfile
 git diff
 git config --unset-all http.https://github.com/.extraheader
@@ -26,6 +33,9 @@ git checkout -b snapshots-"$SUFFIX"
 git add Schutzfile
 if [ -d "test/data/repositories/" ]; then
     git add test/data/repositories/
+fi
+if [ -d "test/data/manifest-checksums/" ]; then
+    git add test/data/manifest-checksums/
 fi
 git commit -m "schutzfile: Update snapshots to ${SUFFIX}"
 git push https://"$GITHUB_TOKEN"@github.com/schutzbot/"$REPO".git
