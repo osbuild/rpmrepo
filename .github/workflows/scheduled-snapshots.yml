@@ -197,4 +197,9 @@ jobs:
         WORKFLOW_RUN: ${{ github.run_id }}
         ENUMERATE_CACHE_SUCCEEDED: ${{steps.wait_for_cache_job.outputs.enumerate_cache_succeeded}}
         REPO: "images"
-      run: .github/scripts/snapshot_update_pr.sh
+      # When updating the repo snapshots in images, we need to regenerate
+      # manifest checksums, which requires compiling cmd/gen-manifests. Install
+      # the necessary dependencies to run the tool
+      run: |
+        sudo apt install -y libgpgme-dev libbtrfs-dev libdevmapper-dev libkrb5-dev golang
+        .github/scripts/snapshot_update_pr.sh
