@@ -12,7 +12,7 @@ import os
 import sys
 import uuid
 
-from . import index, pull, push, enumerate_cache
+from . import index, pull, push, enumerate_cache, snapshot
 
 
 class CliIndex:
@@ -89,6 +89,22 @@ class CliEnumerateCache:
             cmd.build()
 
         return 0
+
+class CliSnapshot:
+    """Snapshot Command"""
+
+    def __init__(self, ctx):
+        self._ctx = ctx
+
+    def run(self):
+        """Run snapshot command"""
+
+        cmd = snapshot.Snapshot(self._ctx.args.cache)
+        for path in self._ctx.args.files:
+            cmd.run_one(path)
+
+        return 0
+
 
 class Cli(contextlib.AbstractContextManager):
     """RPMrepo Command Line Interface"""
@@ -193,6 +209,23 @@ class Cli(contextlib.AbstractContextManager):
             prog=f"{self._parser.prog} enumerate-cache",
         )
 
+        cmd_snapshot = cmd.add_parser(
+            "snapshot",
+            add_help=True,
+            allow_abbrev=False,
+            argument_default=None,
+            description="Run the pull/index/push pipeline for a repo config",
+            help="Run full snapshot from a repo JSON config with sensible defaults",
+            prog=f"{self._parser.prog} snapshot",
+        )
+        cmd_snapshot.add_argument(
+            "files",
+            help="Path to repo JSON config file(s)",
+            metavar="FILE",
+            nargs="+",
+            type=str,
+        )
+
         return self._parser.parse_args(self._argv[1:])
 
     def _verify_args(self):
@@ -241,6 +274,8 @@ class Cli(contextlib.AbstractContextManager):
             ret = CliPush(self).run()
         elif self.args.cmd == "enumerate-cache":
             ret = CliEnumerateCache(self).run()
+        elif self.args.cmd == "snapshot":
+            ret = CliSnapshot(self).run()
         else:
             raise RuntimeError("Command mismatch")
 

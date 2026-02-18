@@ -212,6 +212,24 @@ The backend implementation of RPMrepo involves the following steps:
     configurations that are no longer present in the definition file, and
     generate new ones.
 
+### Snapshot Usage
+
+The `snapshot` command runs the full pull/index/push pipeline for one or
+more repo configs. Each config file gets its own dedicated cache directory
+(derived from the `snapshot-id`), so incremental `dnf reposync` works
+automatically across runs. Example:
+
+```
+export AWS_ACCESS_KEY_ID=xxx
+export AWS_SECRET_ACCESS_KEY=yyy
+# Snapshot a single repo
+rpmrepo snapshot repo/cs10-x86_64-baseos.json
+# Snapshot multiple repos at once
+rpmrepo snapshot repo/f44*.json
+```
+Note that this is just a convenience wrapper.
+
+
 ### List Available Snapshots
 
 If you just need a list of the available snapshots you can query the API like
