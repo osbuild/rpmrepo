@@ -9,6 +9,7 @@ local storage.
 import contextlib
 import errno
 import os
+import shutil
 import subprocess
 import sys
 import tempfile
@@ -71,7 +72,8 @@ class Pull(contextlib.AbstractContextManager):
         self._exitstack = None
 
     def _run_reposync(self):
-        subprocess.run(["dnf", "install", "-y", "dnf4"], stdout=subprocess.PIPE, check=True)
+        if not shutil.which("dnf4"):
+            subprocess.run(["dnf", "install", "-y", "dnf4"], stdout=subprocess.PIPE, check=True)
 
         cmd = [
             "dnf4", "reposync",
