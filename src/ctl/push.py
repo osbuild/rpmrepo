@@ -47,14 +47,28 @@ class Push(contextlib.AbstractContextManager):
 
             for entry in entries:
                 i_total += 1
+                key = f"data/{storage}/{path}/{entry}"
 
-                print(f"[{i_total}/{n_total}] 'data/{storage}/{path}/{entry}'")
+                try:
+                    s3c.copy_object(
+                        Bucket="rpmrepo-storage",
+                        Key=key,
+                        CopySource={"Bucket": "rpmrepo-storage", "Key": key},
+                        MetadataDirective="COPY",
+                    )
+                    print(f"[{i_total}/{n_total}] '{key}' (exists, touched)")
+                    continue
+                except s3c.exceptions.ClientError as e:
+                    if e.response["Error"]["Code"] not in ("404", "NoSuchKey"):
+                        raise
+
+                print(f"[{i_total}/{n_total}] '{key}'")
 
                 with open(os.path.join(level, entry), "rb") as filp:
                     s3c.upload_fileobj(
                         filp,
                         "rpmrepo-storage",
-                        f"data/{storage}/{path}/{entry}",
+                        key,
                     )
 
     def push_snapshot_s3(self, snapshot_id, snapshot_suffix):
