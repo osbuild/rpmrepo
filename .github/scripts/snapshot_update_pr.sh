@@ -17,7 +17,7 @@ if [ -e ./tools/check-snapshots ]; then
     fi
 fi
 
-# Update manifest checksums in osbuild/images.
+# Update manifest checksums in osbuild/image-builder.
 # Identify by checking for the script.
 if [ -e ./tools/gen-manifest-checksums.sh ]; then
     echo "Updating manifest checksums"
