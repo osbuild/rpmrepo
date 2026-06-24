@@ -181,14 +181,14 @@ jobs:
         REPO: "cloud-image-val"
       run: .github/scripts/snapshot_update_pr.sh
 
-    - name: Clone images repository
+    - name: Clone image-builder repository
       uses: actions/checkout@v4
       with:
-        repository: osbuild/images
-        path: images
+        repository: osbuild/image-builder
+        path: image-builder
         fetch-depth: 0
 
-    - name: Update schutzfile and open PR in images repository
+    - name: Update schutzfile and open PR in image-builder repository
       env:
         GITHUB_TOKEN: ${{ secrets.SCHUTZBOT_GH_TOKEN }}
         SUFFIX: ${{ steps.generate_suffix.outputs.suffix }}
@@ -196,8 +196,8 @@ jobs:
         JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
         WORKFLOW_RUN: ${{ github.run_id }}
         ENUMERATE_CACHE_SUCCEEDED: ${{steps.wait_for_cache_job.outputs.enumerate_cache_succeeded}}
-        REPO: "images"
-      # When updating the repo snapshots in images, we need to regenerate
+        REPO: "image-builder"
+      # When updating the repo snapshots in image-builder, we need to regenerate
       # manifest checksums, which requires compiling cmd/gen-manifests. Install
       # the necessary dependencies to run the tool
       run: |
