@@ -266,6 +266,21 @@ rhel:
   base_url: http://download.devel.redhat.com/rhel-9/rel-eng/RHEL-9/RHEL-9.4.0-20240419.25/compose/RT/x86_64/os/
   snapshot_id_suffix: rt-e9.4
 
+- release: '9.6'
+  eus: true
+  repo_name:
+    - baseos
+    - appstream
+- release: '9.6'
+  eus: true
+  arch:
+    - x86_64
+  repo_name:
+    - highavailability
+    - sap
+    - sap-solutions
+    - rt
+
 # Snapshots of RHEL-9.7 nightly repos
 - release: '9.7'
 
