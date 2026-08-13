@@ -347,9 +347,11 @@ fedora:
     - Everything
 
 # branched, in -development release
+- release: '45'
+  stream: development
 
 # rawhide
-- release: '45'
+- release: '46'
   stream: rawhide
 
 # Fedora ELN
