@@ -281,14 +281,27 @@ rhel:
     - sap-solutions
     - rt
 
-# Snapshots of RHEL-9.7 nightly repos
-- release: '9.7'
-
-# Snapshots of RHEL-9.8 nightly repos
+# 9.8 EUS
 - release: '9.8'
+  eus: true
+  repo_name:
+    - baseos
+    - appstream
+- release: '9.8'
+  eus: true
+  arch:
+    - x86_64
+  repo_name:
+    - highavailability
+    - sap
+    - sap-solutions
+    - rt
 
 # Snapshots of RHEL-9.9 nightly repos
 - release: '9.9'
+
+# Snapshots of RHEL-9.10 nightly repos
+- release: '9.10'
 
 # RHEL-10
 # Snapshots of RHEL-10 repos that do not change per minor release
@@ -315,11 +328,43 @@ rhel:
   snapshot_id_suffix: google-compute-engine
   storage: public
 
-# Snapshots of RHEL-10.2 nightly repos
+# 10.0 EUS
+- release: '10.0'
+  eus: true
+  repo_name:
+    - baseos
+    - appstream
+- release: '10.0'
+  eus: true
+  arch:
+    - x86_64
+  repo_name:
+    - highavailability
+    - sap
+    - sap-solutions
+    - rt
+
+# 10.2 EUS
 - release: '10.2'
+  eus: true
+  repo_name:
+    - baseos
+    - appstream
+- release: '10.2'
+  eus: true
+  arch:
+    - x86_64
+  repo_name:
+    - highavailability
+    - sap
+    - sap-solutions
+    - rt
 
 # Snapshots of RHEL-10.3 nightly repos
 - release: '10.3'
+
+# Snapshots of RHEL-10.4 nightly repos
+- release: '10.4'
 
 #######################
 # Fedora repositories #
