@@ -334,6 +334,7 @@ rhel:
   repo_name:
     - baseos
     - appstream
+    - codeready-builder
 - release: '10.0'
   eus: true
   arch:

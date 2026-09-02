@@ -1,0 +1,6 @@
+{
+        "base-url": "https://rhsm-pulp.corp.redhat.com/content/eus/rhel10/10.0/aarch64/codeready-builder/os/",
+        "platform-id": "el10",
+        "snapshot-id": "el10-aarch64-codeready-builder-e10.0",
+        "storage": "rhvpn"
+}
