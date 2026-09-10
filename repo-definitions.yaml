@@ -327,6 +327,26 @@ rhel:
   base_url: https://packages.cloud.google.com/yum/repos/google-compute-engine-el10-x86-64-stable/
   snapshot_id_suffix: google-compute-engine
   storage: public
+- release: '10.0'
+  arch:
+    - x86_64
+  base_url: http://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/RHIVOS-2.0/repos/RHIVOS/compose/RHIVOS/x86_64/os/
+  snapshot_id_suffix: rhivos
+- release: '10.0'
+  arch:
+    - x86_64
+  base_url: http://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/RHIVOS-2.0-Core/repos/RHIVOS/compose/RHIVOS/x86_64/os/
+  snapshot_id_suffix: rhivos-core
+- release: '10.0'
+  arch:
+    - aarch64
+  base_url: http://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/RHIVOS-2.0/repos/RHIVOS/compose/RHIVOS/aarch64/os/
+  snapshot_id_suffix: rhivos
+- release: '10.0'
+  arch:
+    - aarch64
+  base_url: http://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/RHIVOS-2.0-Core/repos/RHIVOS/compose/RHIVOS/aarch64/os/
+  snapshot_id_suffix: rhivos-core
 
 # 10.0 EUS
 - release: '10.0'
