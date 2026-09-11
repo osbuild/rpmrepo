@@ -1,6 +1,0 @@
-{
-        "base-url": "https://odcs.fedoraproject.org/composes/production/latest-Fedora-ELN/compose/AppStream/s390x/os/",
-        "platform-id": "eln",
-        "snapshot-id": "eln-s390x-appstream",
-        "storage": "public"
-}
