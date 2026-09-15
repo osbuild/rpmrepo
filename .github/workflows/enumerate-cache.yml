@@ -1,0 +1,55 @@
+---
+name: Enumerate cache and open PRs
+
+"on":
+  schedule:
+    # Every 6 hours
+    - cron: '0 */6 * * *'
+  workflow_dispatch:
+
+jobs:
+  update-snapshots:
+    name: "Scheduled rpmrepo snapshot"
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
+          role-duration-seconds: 3600  # 1 hour session length
+
+      - name: Clone repository
+        uses: actions/checkout@v4
+
+      - name: Submit enumerate-cache job
+        id: submit_cache_job
+        run: |
+          aws batch submit-job \
+            --job-name "enumerate-cache-runner" \
+            --job-definition "rpmrepo-batch-enumerate-cache-staging" \
+            --job-queue "rpmrepo-batch-staging" \
+            --timeout "attemptDurationSeconds=600" > out.json
+          echo "enumerate_cache_job_id=$(jq -r .jobId out.json)" >>$GITHUB_OUTPUT
+          echo "enumerate_cache_job_name=$(jq -r .jobName out.json)" >>$GITHUB_OUTPUT
+
+      - name: Wait for enumerate cache job to finish
+        id: wait_for_cache_job
+        run: |
+          while true; do
+            STATUS=$(aws batch describe-jobs \
+              --jobs ${{ steps.submit_cache_job.outputs.enumerate_cache_job_id}} \
+              | jq -r .jobs[0].status)
+            if [ $STATUS = "FAILED" ]; then
+              echo "enumerate_cache_succeeded=false" >>$GITHUB_OUTPUT
+              break
+            fi
+            if [ $STATUS = "SUCCEEDED" ]; then
+              echo "enumerate_cache_succeeded=true" >>$GITHUB_OUTPUT
+              break
+            fi
+            echo "Waiting on cache job (status: $STATUS)"
+            sleep 10s
+          done
