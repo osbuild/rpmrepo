@@ -1,5 +1,5 @@
 {
-        "base-url": "http://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/RHIVOS-2.0/repos/RHIVOS/compose/RHIVOS/x86_64/os/",
+        "base-url": "https://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/RHIVOS-2.0/repos/RHIVOS/compose/RHIVOS/x86_64/os/",
         "platform-id": "el10",
         "snapshot-id": "el10-x86_64-rhivos",
         "storage": "rhvpn"

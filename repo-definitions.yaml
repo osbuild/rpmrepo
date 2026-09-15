@@ -330,22 +330,22 @@ rhel:
 - release: '10.0'
   arch:
     - x86_64
-  base_url: http://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/RHIVOS-2.0/repos/RHIVOS/compose/RHIVOS/x86_64/os/
+  base_url: https://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/RHIVOS-2.0/repos/RHIVOS/compose/RHIVOS/x86_64/os/
   snapshot_id_suffix: rhivos
 - release: '10.0'
   arch:
     - x86_64
-  base_url: http://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/RHIVOS-2.0-Core/repos/RHIVOS/compose/RHIVOS/x86_64/os/
+  base_url: https://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/RHIVOS-2.0-Core/repos/RHIVOS/compose/RHIVOS/x86_64/os/
   snapshot_id_suffix: rhivos-core
 - release: '10.0'
   arch:
     - aarch64
-  base_url: http://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/RHIVOS-2.0/repos/RHIVOS/compose/RHIVOS/aarch64/os/
+  base_url: https://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/RHIVOS-2.0/repos/RHIVOS/compose/RHIVOS/aarch64/os/
   snapshot_id_suffix: rhivos
 - release: '10.0'
   arch:
     - aarch64
-  base_url: http://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/RHIVOS-2.0-Core/repos/RHIVOS/compose/RHIVOS/aarch64/os/
+  base_url: https://rhivos.auto-toolchain.redhat.com/in-vehicle-os/RHIVOS-2/RHIVOS-2.0-Core/repos/RHIVOS/compose/RHIVOS/aarch64/os/
   snapshot_id_suffix: rhivos-core
 
 # 10.0 EUS
