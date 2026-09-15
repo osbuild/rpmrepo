@@ -1,5 +1,5 @@
 ---
-name: Enumerate cache and open PRs
+name: Enumerate cache
 
 "on":
   schedule:
