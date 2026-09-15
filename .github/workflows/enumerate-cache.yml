@@ -8,8 +8,8 @@ name: Enumerate cache
   workflow_dispatch:
 
 jobs:
-  update-snapshots:
-    name: "Scheduled rpmrepo snapshot"
+  enumerate-cache:
+    name: "Enumerate cache"
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
