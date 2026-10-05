@@ -380,6 +380,14 @@ rhel:
     - sap
     - sap-solutions
     - rt
+    - supplementary
+
+# 10.2 Extensions
+- release: '10.2'
+  arch:
+    - x86_64
+  base_url: https://rhsm-pulp.corp.redhat.com/content/dist/rhel10/10.2/x86_64/extensions/os/
+  snapshot_id_suffix: extensions-10.2
 
 # Snapshots of RHEL-10.3 nightly repos
 - release: '10.3'

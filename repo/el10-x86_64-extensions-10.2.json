@@ -1,0 +1,6 @@
+{
+        "base-url": "https://rhsm-pulp.corp.redhat.com/content/dist/rhel10/10.2/x86_64/extensions/os/",
+        "platform-id": "el10",
+        "snapshot-id": "el10-x86_64-extensions-10.2",
+        "storage": "rhvpn"
+}
