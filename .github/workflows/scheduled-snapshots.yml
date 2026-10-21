@@ -9,7 +9,7 @@ on:
 jobs:
   update-snapshots:
     name: "Scheduled rpmrepo snapshot"
-    timeout-minutes: 2880 # 2 days timeout
+    timeout-minutes: 10
     runs-on: ubuntu-latest
     steps:
 
@@ -52,154 +52,21 @@ jobs:
       id: wait_for_jobs_start
       run: |
         while true; do
-          SUBMITTED=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status SUBMITTED | jq '.jobSummaryList | length')
           PENDING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status PENDING | jq '.jobSummaryList | length')
           RUNNABLE=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status RUNNABLE | jq '.jobSummaryList | length')
           STARTING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status STARTING | jq '.jobSummaryList | length')
           RUNNING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status RUNNING | jq '.jobSummaryList | length')
+          SUCCEEDED=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status SUCCEEDED | jq '.jobSummaryList | length')
+          FAILED=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status FAILED | jq '.jobSummaryList | length')
 
-          if [ $((SUBMITTED + PENDING + RUNNABLE + STARTING + RUNNING)) -gt 0 ]; then
+          if [ "$FAILED" -gt 0 ]; then
+            echo "Snapshot job failed"
+            exit 1
+          fi
+
+          if [ $((PENDING + RUNNABLE + STARTING + RUNNING + SUCCEEDED)) -eq "${{ steps.count_jobs.outputs.size }}" ]; then
             break
           fi
           sleep 30s
         done
-
-    - name: Wait for snapshot jobs to finish
-      id: wait_for_jobs
-      run: |
-        while true; do
-          SUBMITTED=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status SUBMITTED | jq '.jobSummaryList | length')
-          PENDING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status PENDING | jq '.jobSummaryList | length')
-          RUNNABLE=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status RUNNABLE | jq '.jobSummaryList | length')
-          STARTING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status STARTING | jq '.jobSummaryList | length')
-          RUNNING=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status RUNNING | jq '.jobSummaryList | length')
-
-          if [ $((SUBMITTED + PENDING + RUNNABLE + STARTING + RUNNING)) = 0 ]; then
-            break
-          fi
-          echo Submitted $SUBMITTED, Pending $PENDING, Runnable $RUNNABLE, Starting $STARTING, Running $RUNNING
-          sleep 5m
-        done
-
-        aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status FAILED > failed.json
-        if [ $(jq '.jobSummaryList | length' failed.json) != 0 ]; then
-          echo Failed jobs!
-          for JOBID in $(jq -r '.jobSummaryList[].jobId' failed.json | xargs); do
-            LOGSTREAM_NAME=$(aws batch describe-jobs --jobs "$JOBID" | jq -r '.jobs[0].container.logStreamName')
-            LOGS="$(aws logs get-log-events --log-group-name /aws/batch/job --log-stream-name "$LOGSTREAM_NAME" --start-from-head | jq -r '.events[].message')"
-            echo "Logs for failed job \"$JOBID\":"
-            echo "$LOGS"
-            echo
-          done
-        fi
-
-        SUCCEEDED=$(aws batch list-jobs --array-job-id ${{ steps.submit_job.outputs.job_id }} --job-status SUCCEEDED | jq '.jobSummaryList | length')
-        echo "succeeded=$SUCCEEDED" >>$GITHUB_OUTPUT
-        echo "failed=$(jq '.jobSummaryList | length' failed.json)" >>$GITHUB_OUTPUT
-
-    - name: Submit enumerate-cache job
-      id: submit_cache_job
-      run: |
-        aws batch submit-job \
-          --job-name "enumerate-cache-runner" \
-          --job-definition "rpmrepo-batch-enumerate-cache-staging" \
-          --job-queue "rpmrepo-batch-staging" \
-          --timeout "attemptDurationSeconds=600" > out.json
-        echo "enumerate_cache_job_id=$(jq -r .jobId out.json)" >>$GITHUB_OUTPUT
-        echo "enumerate_cache_job_name=$(jq -r .jobName out.json)" >>$GITHUB_OUTPUT
-
-    - name: Wait for enumerate cache job to finish
-      id: wait_for_cache_job
-      run: |
-        while true; do
-          STATUS=$(aws batch describe-jobs \
-            --jobs ${{ steps.submit_cache_job.outputs.enumerate_cache_job_id}} \
-            | jq -r .jobs[0].status)
-          if [ $STATUS = "FAILED" ]; then
-            echo "enumerate_cache_succeeded=false" >>$GITHUB_OUTPUT
-            break
-          fi
-          if [ $STATUS = "SUCCEEDED" ]; then
-            echo "enumerate_cache_succeeded=true" >>$GITHUB_OUTPUT
-            break
-          fi
-          echo "Waiting on cache job (status: $STATUS)"
-          sleep 10s
-        done
-
-    - name: Clone osbuild-composer repository
-      uses: actions/checkout@v4
-      with:
-        repository: osbuild/osbuild-composer
-        path: osbuild-composer
-        fetch-depth: 0
-
-    - name: Update schutzfile and open PR in osbuild-composer repository
-      env:
-        GITHUB_TOKEN: ${{ secrets.SCHUTZBOT_GH_TOKEN }}
-        SUFFIX: ${{ steps.generate_suffix.outputs.suffix }}
-        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs.outputs.succeeded }}
-        JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
-        WORKFLOW_RUN: ${{ github.run_id }}
-        ENUMERATE_CACHE_SUCCEEDED: ${{steps.wait_for_cache_job.outputs.enumerate_cache_succeeded}}
-        REPO: "osbuild-composer"
-      run: .github/scripts/snapshot_update_pr.sh
-
-    - name: Clone osbuild repository
-      uses: actions/checkout@v4
-      with:
-        repository: osbuild/osbuild
-        path: osbuild
-        fetch-depth: 0
-
-    - name: Update schutzfile and open PR in osbuild repository
-      env:
-        GITHUB_TOKEN: ${{ secrets.SCHUTZBOT_GH_TOKEN }}
-        SUFFIX: ${{ steps.generate_suffix.outputs.suffix }}
-        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs.outputs.succeeded }}
-        JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
-        WORKFLOW_RUN: ${{ github.run_id }}
-        ENUMERATE_CACHE_SUCCEEDED: ${{steps.wait_for_cache_job.outputs.enumerate_cache_succeeded}}
-        REPO: "osbuild"
-      run: .github/scripts/snapshot_update_pr.sh
-
-    - name: Clone cloud image val repository
-      uses: actions/checkout@v4
-      with:
-        repository: osbuild/cloud-image-val
-        path: cloud-image-val
-        fetch-depth: 0
-
-    - name: Update schutzfile and open PR in cloud-image-val repository
-      env:
-        GITHUB_TOKEN: ${{ secrets.SCHUTZBOT_GH_TOKEN }}
-        SUFFIX: ${{ steps.generate_suffix.outputs.suffix }}
-        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs.outputs.succeeded }}
-        JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
-        WORKFLOW_RUN: ${{ github.run_id }}
-        ENUMERATE_CACHE_SUCCEEDED: ${{steps.wait_for_cache_job.outputs.enumerate_cache_succeeded}}
-        REPO: "cloud-image-val"
-      run: .github/scripts/snapshot_update_pr.sh
-
-    - name: Clone image-builder repository
-      uses: actions/checkout@v4
-      with:
-        repository: osbuild/image-builder
-        path: image-builder
-        fetch-depth: 0
-
-    - name: Update schutzfile and open PR in image-builder repository
-      env:
-        GITHUB_TOKEN: ${{ secrets.SCHUTZBOT_GH_TOKEN }}
-        SUFFIX: ${{ steps.generate_suffix.outputs.suffix }}
-        JOBS_SUCCEEDED: ${{ steps.wait_for_jobs.outputs.succeeded }}
-        JOBS_FAILED: ${{ steps.wait_for_jobs.outputs.failed }}
-        WORKFLOW_RUN: ${{ github.run_id }}
-        ENUMERATE_CACHE_SUCCEEDED: ${{steps.wait_for_cache_job.outputs.enumerate_cache_succeeded}}
-        REPO: "image-builder"
-      # When updating the repo snapshots in image-builder, we need to regenerate
-      # manifest checksums, which requires compiling cmd/gen-manifests. Install
-      # the necessary dependencies to run the tool
-      run: |
-        sudo apt install -y libgpgme-dev libbtrfs-dev libdevmapper-dev libkrb5-dev golang
-        .github/scripts/snapshot_update_pr.sh
+        echo "Snapshot jobs have successfully started"
