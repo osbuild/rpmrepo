@@ -404,6 +404,11 @@ rhel:
 
 # Snapshots of RHEL-10.3 nightly repos
 - release: '10.3'
+- release: '10.3'
+  arch:
+    - riscv64
+  base_url: http://riscv-rhel-koji.khw.eng.bos2.dc.redhat.com/kojifiles/repos-dist/rhel-10.3/latest/riscv64/
+  snapshot_id_suffix: riscv-10.3
 
 # Snapshots of RHEL-10.4 nightly repos
 - release: '10.4'

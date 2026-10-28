@@ -1,0 +1,6 @@
+{
+        "base-url": "http://riscv-rhel-koji.khw.eng.bos2.dc.redhat.com/kojifiles/repos-dist/rhel-10.3/latest/riscv64/",
+        "platform-id": "el10",
+        "snapshot-id": "el10-riscv64-riscv-10.3",
+        "storage": "rhvpn"
+}
