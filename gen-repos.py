@@ -356,7 +356,7 @@ def get_parser():
     )
     parser.add_argument(
         '--arch',
-        choices=['x86_64', 'aarch64', 'ppc64le', 's390x'],
+        choices=['x86_64', 'aarch64', 'ppc64le', 's390x', 'riscv64'],
         action='append',
         default=[],
         help='Architecture'

@@ -432,6 +432,18 @@ fedora:
 - release: '45'
   stream: development
 
+# RISC-V uses rolling Koji build repositories rather than the release mirrors.
+- release: '44'
+  arch:
+    - riscv64
+  base_url: https://riscv-koji.fedoraproject.org/repos/f44-build/latest/riscv64/
+  snapshot_id_suffix: koji-build
+- release: '45'
+  arch:
+    - riscv64
+  base_url: https://riscv-koji.fedoraproject.org/repos/f45-build/latest/riscv64/
+  snapshot_id_suffix: koji-build
+
 # rawhide
 - release: '46'
   stream: rawhide

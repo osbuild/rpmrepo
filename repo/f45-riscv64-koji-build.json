@@ -1,0 +1,6 @@
+{
+        "base-url": "https://riscv-koji.fedoraproject.org/repos/f45-build/latest/riscv64/",
+        "platform-id": "f45",
+        "snapshot-id": "f45-riscv64-koji-build",
+        "storage": "public"
+}
