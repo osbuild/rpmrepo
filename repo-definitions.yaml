@@ -8,6 +8,11 @@
 cs:
 - release: '9'
 - release: '10'
+- release: '10'
+  arch:
+    - riscv64
+  base_url: https://mirror.stream.centos.org/SIGs/10-stream/isa/riscv64/packages-riscv/
+  snapshot_id_suffix: riscv
 
 #####################
 # RHEL repositories #

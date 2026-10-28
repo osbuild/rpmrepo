@@ -1,0 +1,6 @@
+{
+        "base-url": "https://mirror.stream.centos.org/SIGs/10-stream/isa/riscv64/packages-riscv/",
+        "platform-id": "el10",
+        "snapshot-id": "cs10-riscv64-riscv",
+        "storage": "public"
+}
