@@ -332,6 +332,11 @@ rhel:
   base_url: https://packages.cloud.google.com/yum/repos/google-compute-engine-el10-x86-64-stable/
   snapshot_id_suffix: google-compute-engine
   storage: public
+- release: '10.0'
+  arch:
+    - x86_64
+  base_url: https://packages.redhat.com/partner-repositories/@partner-repos-nvidia-rm/cuda-monorepo-rhel-10/custom-1-x86_64/
+  snapshot_id_suffix: partner-repo-nvidia-cuda
 
 # 10.0 EUS
 - release: '10.0'

@@ -1,0 +1,6 @@
+{
+        "base-url": "https://packages.redhat.com/partner-repositories/@partner-repos-nvidia-rm/cuda-monorepo-rhel-10/custom-1-x86_64/",
+        "platform-id": "el10",
+        "snapshot-id": "el10-x86_64-partner-repo-nvidia-cuda",
+        "storage": "rhvpn"
+}
