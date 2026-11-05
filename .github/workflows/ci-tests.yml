@@ -32,8 +32,8 @@ jobs:
     - name: "Verify that snapshot configurations have been generated"
       run: |
         make snapshot-configs
-        if [ -n "$(git status --porcelain)" ]; then
+        if ! status=$(git status --porcelain) || [ -n "$status" ]; then
           echo
           echo "Please run make snapshot-configs"
-          exit "1"
+          exit 1
         fi
