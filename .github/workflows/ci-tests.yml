@@ -15,6 +15,9 @@ jobs:
     - name: "Clone Repository"
       uses: actions/checkout@v2
 
+    - name: "Mark repository as safe"
+      run: git config --global --add safe.directory "$GITHUB_WORKSPACE"
+
     # This verifies the formatting of the repository configurations in ./repo/ and
     # tries to verify external references.
     - name: "Run repo-check"
@@ -32,8 +35,8 @@ jobs:
     - name: "Verify that snapshot configurations have been generated"
       run: |
         make snapshot-configs
-        if [ -n "$(git status --porcelain)" ]; then
+        if ! status=$(git status --porcelain) || [ -n "$status" ]; then
           echo
           echo "Please run make snapshot-configs"
-          exit "1"
+          exit 1
         fi
