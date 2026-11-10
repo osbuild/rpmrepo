@@ -61,12 +61,11 @@ elif [ "$?" -ne 1 ]; then
 fi
 
 git diff --cached
-git config --unset-all http.https://github.com/.extraheader
 git config user.name "schutzbot"
 git config user.email "schutzbot@gmail.com"
 git checkout -b snapshots-"$SUFFIX"
 git commit -m "schutzfile: Update snapshots to ${SUFFIX}"
-git push https://"$GITHUB_TOKEN"@github.com/schutzbot/"$REPO".git
+git -c http.https://github.com/.extraheader= push https://"$GITHUB_TOKEN"@github.com/schutzbot/"$REPO".git || exit 1
 
 cat <<EOF > "body"
 Snapshot:
